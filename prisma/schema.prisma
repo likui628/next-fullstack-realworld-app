@@ -7,6 +7,78 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tags {
-  value String @id
+model User {
+  id               Int               @id @default(autoincrement())
+  usename          String            @unique
+  password         String
+  email            String            @unique
+  bio              String?
+  image            String?
+  articles         Article[]
+  comments         Comment[]
+  favoriteArticles ArticleFavorite[]
+  follows          UserFollow[]      @relation("follower")
+  followedBy       UserFollow[]      @relation("followed")
+}
+
+model Article {
+  id          Int               @id @default(autoincrement())
+  slug        String            @unique
+  title       String
+  description String
+  body        String
+  created_at  DateTime          @default(now())
+  updated_at  DateTime          @updatedAt
+  authorId    Int
+  author      User              @relation(fields: [authorId], references: [id])
+  comments    Comment[]
+  tagList     ArticleTag[]
+  favoritedBy ArticleFavorite[]
+}
+
+model Tag {
+  id      Int          @id @default(autoincrement())
+  value   String       @unique
+  article ArticleTag[]
+}
+
+model Comment {
+  id         Int      @id @default(autoincrement())
+  body       String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+  articleId  Int
+  article    Article  @relation(fields: [articleId], references: [id])
+  authorId   Int
+  author     User     @relation(fields: [authorId], references: [id])
+}
+
+model ArticleTag {
+  articleId Int
+  article   Article @relation(fields: [articleId], references: [id])
+
+  tagId Int
+  tag   Tag @relation(fields: [tagId], references: [id])
+
+  @@id([articleId, tagId])
+}
+
+model ArticleFavorite {
+  articleId Int
+  article   Article @relation(fields: [articleId], references: [id])
+
+  authorId Int
+  author   User @relation(fields: [authorId], references: [id])
+
+  @@id([articleId, authorId])
+}
+
+model UserFollow {
+  followerId Int
+  follower   User @relation("follower", fields: [followerId], references: [id])
+
+  followedId Int
+  followed   User @relation("followed", fields: [followedId], references: [id])
+
+  @@id([followerId, followedId])
 }
