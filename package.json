@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
     "studio": "prisma studio"
   },
   "dependencies": {
@@ -26,6 +27,10 @@
     "postcss": "^8",
     "prisma": "^5.6.0",
     "tailwindcss": "^3.3.0",
+    "ts-node": "^10.9.1",
     "typescript": "^5"
+  },
+  "prisma": {
+    "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
   }
 }
