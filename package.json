@@ -13,11 +13,13 @@
   },
   "dependencies": {
     "@prisma/client": "^5.6.0",
+    "jsonwebtoken": "^9.0.2",
     "next": "14.0.3",
     "react": "^18",
     "react-dom": "^18"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -25,11 +27,11 @@
     "eslint": "^8",
     "eslint-config-next": "14.0.3",
     "postcss": "^8",
+    "prettier": "^2.8.4",
     "prisma": "^5.6.0",
     "tailwindcss": "^3.3.0",
     "ts-node": "^10.9.1",
-    "typescript": "^5",
-    "prettier": "^2.8.4"
+    "typescript": "^5"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
