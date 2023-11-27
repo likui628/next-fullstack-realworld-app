@@ -19,5 +19,5 @@ npm run build
 - [vue3-realworld-example-app](https://github.com/gardenofdev/vue3-realworld-example-app)
 - [realworld](https://github.com/gothinkster/realworld)
 - [react-realworld-example-app](https://github.com/gardenofdev/react-realworld-example-app/)
-- [realworld-nextjs-trpc-prisma](https://github.com/gutentag2012/realworld-nextjs-trpc-prisma)
-- [Full-Stack Blog App Tutorial | Next.js MongoDB Blog App Project Full Course](https://youtu.be/DpYE5zPDRVQ?si=gaM3hhFrx6cTT2dM)
+- [next-realworld-example-app](https://github.com/reck1ess/next-realworld-example-app)
+- [Full-Stack Blog App Tutorial](https://youtu.be/DpYE5zPDRVQ?si=gaM3hhFrx6cTT2dM)

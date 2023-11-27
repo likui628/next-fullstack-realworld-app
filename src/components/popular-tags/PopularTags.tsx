@@ -1,18 +1,22 @@
-const PopularTags = () => {
-    return (
-        <div className="sidebar">
-            <p>Popular Tags</p>
-            <div className="tag-list">
-                <a href="" className="tag-pill tag-default">programming</a>
-                <a href="" className="tag-pill tag-default">javascript</a>
-                <a href="" className="tag-pill tag-default">emberjs</a>
-                <a href="" className="tag-pill tag-default">angularjs</a>
-                <a href="" className="tag-pill tag-default">react</a>
-                <a href="" className="tag-pill tag-default">mean</a>
-                <a href="" className="tag-pill tag-default">node</a>
-                <a href="" className="tag-pill tag-default">rails</a>
-            </div>
-        </div>
-    )
+async function getData() {
+  const res = await fetch("http://localhost:3000/api/tags", { method: "GET" });
+
+  return res.json() as Promise<{ tags: string[] }>;
 }
-export default PopularTags
+
+const PopularTags = async () => {
+  const data = await getData();
+  return (
+    <div className="sidebar">
+      <p>Popular Tags</p>
+      <div className="tag-list">
+        {data.tags.map((tag) => (
+          <a href="" className="tag-pill tag-default">
+            {tag}
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+};
+export default PopularTags;
