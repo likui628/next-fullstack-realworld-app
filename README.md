@@ -20,4 +20,4 @@ npm run build
 - [realworld](https://github.com/gothinkster/realworld)
 - [react-realworld-example-app](https://github.com/gardenofdev/react-realworld-example-app/)
 - [next-realworld-example-app](https://github.com/reck1ess/next-realworld-example-app)
-- [Full-Stack Blog App Tutorial](https://youtu.be/DpYE5zPDRVQ?si=gaM3hhFrx6cTT2dM)
+- [next-real-world](https://github.com/jimleestone/next-real-world/)
