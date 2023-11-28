@@ -21,6 +21,7 @@ export function useFetch<T = any>() {
   ): Promise<void> => {
     try {
       setLoading(true);
+      setErrors([]);
       const resp = await fetch(`${BASE_URL}${url}`, {
         ...basicOptions,
         method,
