@@ -8,13 +8,7 @@ const basicOptions = {
   },
 };
 
-export enum StatusEnum {
-  error,
-  success,
-}
-
 export function useFetch<T = any>() {
-  const [status, setStatus] = useState<StatusEnum>();
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<T>();
   const [errors, setErrors] = useState<string[]>([]);
@@ -35,10 +29,8 @@ export function useFetch<T = any>() {
       });
       const data = await resp.json();
       if (resp.ok) {
-        setStatus(StatusEnum.success);
         setData(data);
       } else {
-        setStatus(StatusEnum.error);
         setErrors(data.errors);
       }
     } catch (e: any) {
@@ -48,5 +40,5 @@ export function useFetch<T = any>() {
     }
   };
 
-  return { status, loading, data, errors, request };
+  return { loading, data, errors, request };
 }

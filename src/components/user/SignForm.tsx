@@ -1,34 +1,57 @@
 "use client";
+
 import ListErrors from "@/components/common/ListErrors";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthProvider";
-import { StatusEnum, useFetch } from "@/hooks/useFetch";
+import { useFetch } from "@/hooks/useFetch";
 
-const LoginForm = () => {
+interface SignFormProps {
+  isRegister?: boolean;
+}
+
+const SignForm = ({ isRegister }: SignFormProps) => {
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { status, loading, data, errors, request } = useFetch();
+  const { loading, data, errors, request } = useFetch<{ user: any }>();
 
   const { login } = useAuth();
   const router = useRouter();
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const formData = { user: { email, password } };
-    await request("/users/login", "POST", formData);
-
-    if (status === StatusEnum.success) {
+    if (isRegister) {
+      const formData = { user: { username, email, password } };
+      await request("/users", "POST", formData);
+    } else {
+      const formData = { user: { email, password } };
+      await request("/users/login", "POST", formData);
+    }
+    if (data) {
       login(data.user.token);
       router.push("/");
     }
   };
-
   return (
     <>
       <ListErrors errors={errors} />
       <form onSubmit={handleFormSubmit}>
+        {isRegister && (
+          <fieldset className="form-group">
+            <input
+              className="form-control form-control-lg"
+              type="text"
+              name="username"
+              placeholder="Username"
+              data-testid="input-username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              disabled={loading}
+            />
+          </fieldset>
+        )}
         <fieldset className="form-group">
           <input
             className="form-control form-control-lg"
@@ -58,10 +81,11 @@ const LoginForm = () => {
           data-testid="btn-submit"
           disabled={loading}
         >
-          Sign in
+          {isRegister ? "Sign up" : "Sign in"}
         </button>
       </form>
     </>
   );
 };
-export default LoginForm;
+
+export default SignForm;
