@@ -16,20 +16,9 @@ const LoginForm = () => {
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    await request(() =>
-      fetch("http://localhost:3000/api/users/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user: {
-            email,
-            password,
-          },
-        }),
-      })
-    );
+    const formData = { user: { email, password } };
+    await request("/users/login", "POST", formData);
+
     if (status === StatusEnum.success) {
       login(data.user.token);
       router.push("/");
