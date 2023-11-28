@@ -3,21 +3,21 @@ import ListErrors from "@/components/common/ListErrors";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthProvider";
+import { StatusEnum, useFetch } from "@/hooks/useFetch";
 
 const LoginForm = () => {
-  const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState<string[]>([]);
+
+  const { status, loading, data, errors, request } = useFetch();
 
   const { login } = useAuth();
   const router = useRouter();
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
 
-    try {
-      const resp = await fetch("http://localhost:3000/api/users/login", {
+    await request(() =>
+      fetch("http://localhost:3000/api/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,17 +28,11 @@ const LoginForm = () => {
             password,
           },
         }),
-      });
-
-      const data = await resp.json();
-      if (resp.ok) {
-        login(data.user.token);
-        router.push("/");
-      } else {
-        setErrors(data.errors);
-      }
-    } finally {
-      setIsLoading(false);
+      })
+    );
+    if (status === StatusEnum.success) {
+      login(data.user.token);
+      router.push("/");
     }
   };
 
@@ -55,7 +49,7 @@ const LoginForm = () => {
             data-testid="input-email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            disabled={isLoading}
+            disabled={loading}
           />
         </fieldset>
         <fieldset className="form-group">
@@ -67,13 +61,13 @@ const LoginForm = () => {
             data-testid="input-password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            disabled={isLoading}
+            disabled={loading}
           />
         </fieldset>
         <button
           className="btn btn-lg btn-primary pull-xs-right"
           data-testid="btn-submit"
-          disabled={isLoading}
+          disabled={loading}
         >
           Sign in
         </button>
