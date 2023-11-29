@@ -20,7 +20,7 @@ async function main() {
             slug: "how-to-train-your-dragon",
             description: "Ever wonder how?",
             body: "You have to believe",
-            tags: {
+            tagList: {
               create: [
                 {
                   tag: {

@@ -7,7 +7,7 @@ const TOKEN_ALG = "HS256";
 const TOKEN_PREFIX = "Bearer ";
 
 interface AuthPayload {
-  sub: number;
+  sub: string;
   user: string;
 }
 
@@ -23,7 +23,7 @@ function verifyToken<T>(token: string) {
   return payload as T;
 }
 
-export function loadCurrentUser(authorization: string) {
+export function loadCurrentUser(authorization: string | null) {
   if (!authorization || !authorization.startsWith(TOKEN_PREFIX)) {
     return;
   }
