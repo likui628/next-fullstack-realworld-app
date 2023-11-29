@@ -1,12 +1,5 @@
 import { useState } from "react";
-
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
-
-const basicOptions = {
-  headers: {
-    "Content-Type": "application/json",
-  },
-};
+import { fetchWrapper } from "@/utils/fetch";
 
 export function useFetch<T = any>() {
   const [loading, setLoading] = useState(false);
@@ -15,27 +8,17 @@ export function useFetch<T = any>() {
 
   const request = async (
     url: string,
-    method: string = "GET",
+    method?: string,
     body?: any,
     options?: RequestInit
   ): Promise<void> => {
     try {
       setLoading(true);
       setErrors([]);
-      const resp = await fetch(`${BASE_URL}${url}`, {
-        ...basicOptions,
-        method,
-        ...options,
-        body: body && JSON.stringify(body),
-      });
-      const data = await resp.json();
-      if (resp.ok) {
-        setData(data);
-      } else {
-        setErrors(data.errors);
-      }
+      const data = await fetchWrapper<T>(url, method, body, options);
+      setData(data);
     } catch (e: any) {
-      console.log(e);
+      setErrors(e);
     } finally {
       setLoading(false);
     }
