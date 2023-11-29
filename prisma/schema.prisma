@@ -8,77 +8,88 @@ datasource db {
 }
 
 model User {
-  id               Int               @id @default(autoincrement())
-  username         String            @unique
-  password         String
-  email            String            @unique
-  bio              String?
-  image            String?
-  articles         Article[]
-  comments         Comment[]
-  favoriteArticles ArticleFavorite[]
-  follows          UserFollow[]      @relation("follower")
-  followedBy       UserFollow[]      @relation("followed")
+  id         String      @id @default(uuid())
+  bio        String?
+  email      String      @unique
+  image      String?
+  password   String
+  username   String      @unique
+  favorites  Favorites[]
+  followedBy Follows[]   @relation("following")
+  following  Follows[]   @relation("follower")
+  comments   Comment[]
+  articles   Article[]
+
+  @@map("user")
+}
+
+model Follows {
+  follower    User   @relation("follower", fields: [followerId], references: [id])
+  followerId  String @map("follower_id")
+  following   User   @relation("following", fields: [followingId], references: [id])
+  followingId String @map("following_id")
+
+  @@id([followerId, followingId])
+  @@map("follows")
 }
 
 model Article {
-  id          Int               @id @default(autoincrement())
-  slug        String            @unique
-  title       String
-  description String
-  body        String
-  created_at  DateTime          @default(now())
-  updated_at  DateTime          @updatedAt
-  authorId    Int
-  author      User              @relation(fields: [authorId], references: [id])
-  comments    Comment[]
-  tagList     ArticleTag[]
-  favoritedBy ArticleFavorite[]
+  id             String         @id @default(uuid())
+  slug           String         @unique
+  title          String
+  description    String
+  body           String
+  createdAt      DateTime       @default(now()) @map("created_at")
+  updatedAt      DateTime       @updatedAt @map("updated_at")
+  tags           ArticlesTags[]
+  author         User           @relation(fields: [authorId], references: [id])
+  authorId       String         @map("author_id")
+  favoritedBy    Favorites[]
+  comments       Comment[]
+  del            Boolean        @default(false)
+  favoritesCount Int            @default(0) @map("favorites_count")
+
+  @@map("article")
 }
 
-model Tag {
-  id      Int          @id @default(autoincrement())
-  value   String       @unique
-  article ArticleTag[]
+model Favorites {
+  favoriting  Article @relation(fields: [articleId], references: [id])
+  articleId   String  @map("article_id")
+  favoritedBy User    @relation(fields: [userId], references: [id])
+  userId      String  @map("user_id")
+
+  @@id([articleId, userId])
+  @@map("favorites")
 }
 
 model Comment {
-  id         Int      @id @default(autoincrement())
-  body       String
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  articleId  Int
-  article    Article  @relation(fields: [articleId], references: [id])
-  authorId   Int
-  author     User     @relation(fields: [authorId], references: [id])
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  body      String
+  article   Article  @relation(fields: [articleId], references: [id])
+  articleId String   @map("article_id")
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  String   @map("author_id")
+  del       Boolean  @default(false)
+
+  @@map("comment")
 }
 
-model ArticleTag {
-  articleId Int
+model ArticlesTags {
   article   Article @relation(fields: [articleId], references: [id])
-
-  tagId Int
-  tag   Tag @relation(fields: [tagId], references: [id])
+  articleId String  @map("article_id")
+  tag       Tag     @relation(fields: [tagId], references: [id])
+  tagId     String  @map("tag_id")
 
   @@id([articleId, tagId])
+  @@map("articles_tags")
 }
 
-model ArticleFavorite {
-  articleId Int
-  article   Article @relation(fields: [articleId], references: [id])
+model Tag {
+  id       String         @id @default(uuid())
+  name     String         @unique
+  articles ArticlesTags[]
 
-  authorId Int
-  author   User @relation(fields: [authorId], references: [id])
-
-  @@id([articleId, authorId])
-}
-
-model UserFollow {
-  followerId Int
-  follower   User @relation("follower", fields: [followerId], references: [id])
-
-  followedId Int
-  followed   User @relation("followed", fields: [followedId], references: [id])
-
-  @@id([followerId, followedId])
+  @@map("tag")
 }
