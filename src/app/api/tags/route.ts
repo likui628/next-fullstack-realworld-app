@@ -4,6 +4,6 @@ import { prisma } from "@/utils/connect";
 export const GET = async () => {
   const tags = await prisma.tag.findMany();
   return NextResponse.json({
-    tags: tags.map((tag) => tag.value),
+    tags: tags.map((tag) => tag.name),
   });
 };

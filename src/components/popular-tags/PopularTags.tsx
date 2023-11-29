@@ -1,11 +1,8 @@
-async function getData() {
-  const res = await fetch("http://localhost:3000/api/tags", { method: "GET" });
-
-  return res.json() as Promise<{ tags: string[] }>;
-}
+import { TagsResp } from "@/types/api";
+import { fetchWrapper } from "@/utils/fetch";
 
 const PopularTags = async () => {
-  const data = await getData();
+  const data = await fetchWrapper<TagsResp>("/tags");
   return (
     <div className="sidebar">
       <p>Popular Tags</p>
