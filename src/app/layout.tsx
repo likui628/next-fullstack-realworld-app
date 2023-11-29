@@ -2,7 +2,7 @@ import { AuthProvider } from "@/providers/AuthProvider";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { ChildrenProps } from "@/types/props";
-import "./realworld.css";
+import "./global.css";
 
 export const metadata = {
   title: "Next.js",
