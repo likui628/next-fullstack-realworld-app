@@ -12,7 +12,7 @@ async function main() {
       password: "123456",
       email: "alice@prisma.io",
       bio: "I like turtles.",
-      image: "https://i.stack.imgur.com/xHWG8.jpg",
+      image: "https://api.realworld.io/images/demo-avatar.png",
       articles: {
         create: [
           {
