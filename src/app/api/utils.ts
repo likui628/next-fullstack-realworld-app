@@ -5,7 +5,7 @@ const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "token secret key
 
 const TOKEN_ALG = "HS256";
 
-const TOKEN_PREFIX = "Bearer ";
+export const TOKEN_PREFIX = "Bearer ";
 
 interface AuthPayload {
   sub: string;

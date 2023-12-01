@@ -1,19 +1,19 @@
-import { TagsResp } from "@/types/api";
-import { fetchWrapper } from "@/utils/fetch";
+import { prisma } from "@/utils/connect";
 
 const PopularTags = async () => {
-  const data = await fetchWrapper<TagsResp>("/tags");
+  const tags = await prisma.tag.findMany();
   return (
     <div className="sidebar">
       <p>Popular Tags</p>
       <div className="tag-list">
-        {data.tags.map((tag) => (
-          <a href="" className="tag-pill tag-default">
-            {tag}
+        {tags.map((tag) => (
+          <a href="" key={tag.id} className="tag-pill tag-default">
+            {tag.name}
           </a>
         ))}
       </div>
     </div>
   );
 };
+
 export default PopularTags;

@@ -6,7 +6,7 @@ const basicOptions = {
   },
 };
 
-export const fetchWrapper = async <T>(
+export const fetchWrapper = async <T = any>(
   url: string,
   method: string = "GET",
   body?: any,
