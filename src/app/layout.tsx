@@ -1,4 +1,3 @@
-import { AuthProvider } from "@/providers/AuthProvider";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import { ChildrenProps } from "@/types/props";
@@ -15,11 +14,9 @@ export default async function RootLayout({ children }: ChildrenProps) {
   return (
     <html lang="en">
       <body>
-        <AuthProvider>
-          <Header currentUser={currentUser} />
-          {children}
-          <Footer />
-        </AuthProvider>
+        <Header currentUser={currentUser} />
+        {children}
+        <Footer />
       </body>
     </html>
   );
