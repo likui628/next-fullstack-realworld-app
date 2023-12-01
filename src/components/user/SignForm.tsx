@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/providers/AuthProvider";
 import { useFetch } from "@/hooks/useFetch";
+import { signIn } from "next-auth/react";
 
 interface SignFormProps {
   isRegister?: boolean;
@@ -26,13 +27,22 @@ const SignForm = ({ isRegister }: SignFormProps) => {
       const formData = { user: { username, email, password } };
       await request("/users", "POST", formData);
     } else {
-      const formData = { user: { email, password } };
-      await request("/users/login", "POST", formData);
+      // const formData = { user: { email, password } };
+      // await request("/users/login", "POST", formData);
+      signIn("credentials", {
+        email,
+        password,
+        redirect: false,
+      }).then((callback) => {
+        if (callback?.ok) {
+          router.push("/");
+        }
+      });
     }
-    if (data) {
-      login(data.user.token);
-      router.push("/");
-    }
+    // if (data) {
+    //   login(data.user.token);
+    //   router.push("/");
+    // }
   };
   return (
     <>

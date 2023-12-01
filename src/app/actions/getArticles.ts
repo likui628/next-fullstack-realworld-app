@@ -1,7 +1,7 @@
 import { prisma } from "@/utils/connect";
-import { getUserId } from "@/app/api/utils";
 import { ArticlesResp } from "@/types/server";
 import { ARTICLE_PAGE_LIMIT } from "@/utils/constants";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface IArticlesParams {
   limit?: number;
@@ -13,7 +13,8 @@ const defaultImage = process.env.DEFAULT_USER_AVATAR || "";
 export default async function getArticles(params: IArticlesParams): Promise<ArticlesResp> {
   const { limit = ARTICLE_PAGE_LIMIT, offset = 0 } = params;
 
-  const userId = getUserId();
+  const currentUser = await getCurrentUser();
+  const userId = currentUser?.id;
 
   let query: any = {};
 
@@ -52,7 +53,7 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
       },
     },
   });
-  console.log(userId);
+
   return {
     articles: data.map((article) => {
       const following = article.author.followedBy.some((follow) => follow.followerId === userId);

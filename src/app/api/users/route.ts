@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 import { prisma } from "@/utils/connect";
 import { Response } from "@/app/api/response";
-import { issueToken } from "@/app/api/utils";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 
 export const POST = async (req: NextRequest) => {
@@ -15,12 +14,9 @@ export const POST = async (req: NextRequest) => {
       },
     });
 
-    const { id, username } = user;
-    const payload = { sub: id, user: username };
     return Response.ok({
       user: {
         ...user,
-        token: issueToken(payload),
       },
     });
   } catch (e) {
