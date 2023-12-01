@@ -1,6 +1,11 @@
 import PopularTags from "@/components/popular-tags/PopularTags";
+import ArticlePreview from "@/components/article/ArticlePreview";
+import getArticles from "@/app/actions/getArticles";
+import { ArticleItem } from "@/types/server";
+import Pagination from "@/components/article/Pagination";
 
-export default function Home() {
+export default async function Home() {
+  const data = await getArticles({});
   return (
     <>
       <div className="home-page">
@@ -28,7 +33,16 @@ export default function Home() {
                   </li>
                 </ul>
               </div>
-              <div className="article-preview">Loading articles...</div>
+              {data.articlesCount === 0 ? (
+                <div className="article-preview">No articles are here... yet.</div>
+              ) : (
+                <>
+                  {data.articles.map((article: ArticleItem) => (
+                    <ArticlePreview article={article} key={article.slug} />
+                  ))}
+                  <Pagination count={data.articlesCount} page={1} />
+                </>
+              )}
             </div>
             <div className="col-md-3">
               <PopularTags />

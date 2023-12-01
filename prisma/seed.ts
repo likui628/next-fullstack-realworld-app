@@ -39,7 +39,42 @@ async function main() {
       },
     },
   });
-  console.log({ alice });
+
+  const gerome = await prisma.user.upsert({
+    where: { email: "gerome@realworld.io" },
+    update: {},
+    create: {
+      username: "Gerome",
+      password: "123456",
+      email: "gerome@realworld.io",
+      bio: "Hello followers.",
+      image: "",
+      articles: {
+        create: [
+          {
+            title: "Welcome to RealWorld project",
+            slug: "welcome-to-realWorld-project-1",
+            description: "",
+            body: "See how the exact same Medium.com clone (called Conduit) is built using different frontends and backends. Yes, you can mix and match them, because they all adhere to the same API spec",
+            tagList: {
+              create: [
+                {
+                  tag: {
+                    create: { name: "welcome" },
+                  },
+                },
+                {
+                  tag: {
+                    create: { name: "introduction" },
+                  },
+                },
+              ],
+            },
+          },
+        ],
+      },
+    },
+  });
   console.log(`Seeding finished.`);
 }
 

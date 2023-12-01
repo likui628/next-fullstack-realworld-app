@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import { headers } from "next/headers";
 
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET || "token secret key";
 
@@ -30,4 +31,11 @@ export function loadCurrentUser(authorization: string | null) {
   const token = authorization.split(TOKEN_PREFIX)[1];
   const payload = verifyToken<AuthPayload>(token);
   return payload.sub;
+}
+
+export function getUserId() {
+  const headersList = headers();
+  const token = headersList.get("Authorization");
+
+  return loadCurrentUser(token);
 }
