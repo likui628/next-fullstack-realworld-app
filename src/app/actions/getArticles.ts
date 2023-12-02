@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/connect";
 import { ArticlesResp } from "@/types/server";
-import { ARTICLE_PAGE_LIMIT } from "@/utils/constants";
+import { ARTICLE_PAGE_LIMIT, defaultImage } from "@/utils/constants";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface IArticlesParams {
@@ -9,8 +9,6 @@ interface IArticlesParams {
   tag?: string;
   feed?: string;
 }
-
-const defaultImage = process.env.DEFAULT_USER_AVATAR || "";
 
 export default async function getArticles(params: IArticlesParams): Promise<ArticlesResp> {
   const { pageSize = ARTICLE_PAGE_LIMIT, page = 1 } = params;

@@ -1,12 +1,22 @@
+"use client";
+
 import Link from "next/link";
 import { formatTime } from "@/utils/format";
 import { ArticleItem } from "@/types/server";
+import FavoritesButton from "@/components/common/FavoritesButton";
+import { useState } from "react";
 
 interface ArticlePreviewProps {
   article: ArticleItem;
 }
 
-const ArticlePreview = ({ article }: ArticlePreviewProps) => {
+const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
+  const [article, setArticle] = useState(articleInit);
+
+  const handleFavorite = (newArticle: ArticleItem) => {
+    console.log(newArticle.favorited);
+    setArticle({ ...newArticle });
+  };
   return (
     <>
       <div className="article-preview">
@@ -20,14 +30,11 @@ const ArticlePreview = ({ article }: ArticlePreviewProps) => {
             </Link>
             <span className="date">{formatTime(article.updatedAt)}</span>
           </div>
-          <button
-            className={`btn btn-sm pull-xs-right ${
-              article.favorited ? "btn-primary" : "btn-outline-primary"
-            }`}
-          >
-            <i className="ion-heart"></i>
-            &nbsp;<span className="counter">{article.favoritesCount}</span>
-          </button>
+          <FavoritesButton
+            article={article}
+            onChange={handleFavorite}
+            className="btn btn-sm pull-xs-right"
+          />
         </div>
         <Link href={`/article/${article.slug}`} className="preview-link">
           <h1>{article.title}</h1>
