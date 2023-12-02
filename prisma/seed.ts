@@ -2,6 +2,38 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+const markdown = `
+## Headers
+
+# This is a Heading h1
+## This is a Heading h2
+###### This is a Heading h6
+
+## Emphasis
+
+*This text will be italic*  
+_This will also be italic_
+
+**This text will be bold**  
+__This will also be bold__
+
+_You **can** combine them_
+
+## Lists
+
+* Item 1
+* Item 2
+* Item 2a
+* Item 2b
+
+## Blocks of code
+
+\`\`\`
+let message = 'Hello world';
+alert(message);
+\`\`\`
+`;
+
 async function main() {
   console.log(`Start seeding ...`);
   const alice = await prisma.user.upsert({
@@ -30,6 +62,21 @@ async function main() {
                 {
                   tag: {
                     create: { name: "training" },
+                  },
+                },
+              ],
+            },
+          },
+          {
+            title: "Markdown syntax guide",
+            slug: "markdown-syntax-guide",
+            description: "",
+            body: markdown,
+            tagList: {
+              create: [
+                {
+                  tag: {
+                    create: { name: "markdown" },
                   },
                 },
               ],
