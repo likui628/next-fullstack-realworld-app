@@ -1,4 +1,4 @@
-import { Article, User } from ".prisma/client";
+import { Article, User, Comment } from ".prisma/client";
 
 export interface TagsResp {
   tags: string[];
@@ -16,4 +16,14 @@ export interface ArticleItem extends Omit<Article, "createdAt" | "updatedAt"> {
 export interface ArticlesResp {
   articles: ArticleItem[];
   articlesCount: number;
+}
+
+export interface CommentItem extends Omit<Comment, "createdAt" | "updatedAt"> {
+  createdAt: string;
+  updatedAt: string;
+  author: Omit<User, "password" | "image"> & { image: string };
+}
+
+export interface CommentsResp {
+  comments: CommentItem[];
 }

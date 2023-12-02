@@ -5,7 +5,7 @@ export class Response {
     return NextResponse.json(data);
   }
 
-  static error(errors: string[], status = 404): NextResponse {
-    return NextResponse.json({ errors }, { status });
+  static error(message: string | string[], status = 404): NextResponse {
+    return NextResponse.json({ errors: Array.isArray(message) ? message : [message] }, { status });
   }
 }

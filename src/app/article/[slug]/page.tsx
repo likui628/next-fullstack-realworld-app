@@ -28,8 +28,8 @@ const articlePage = async ({ params }: ArticleProps) => {
             </ul>
             <br />
             <ArticleActions />
+            <ArticleComments slug={params.slug} />
           </div>
-          <ArticleComments />
         </>
       )}
     </div>
