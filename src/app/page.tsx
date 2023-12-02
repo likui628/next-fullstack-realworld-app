@@ -3,9 +3,25 @@ import ArticlePreview from "@/components/article/ArticlePreview";
 import getArticles from "@/app/actions/getArticles";
 import { ArticleItem } from "@/types/server";
 import Pagination from "@/components/article/Pagination";
+import Link from "next/link";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
-export default async function Home() {
-  const data = await getArticles({});
+interface HomeProps {
+  searchParams: {
+    page?: string;
+    tag?: string;
+    feed?: string;
+  };
+}
+
+export default async function Home({ searchParams }: HomeProps) {
+  const page = Number(searchParams.page) || 1;
+  const tag = searchParams.tag;
+  const feed = searchParams.feed;
+
+  const user = await getCurrentUser();
+
+  const data = await getArticles({ page, tag, feed });
   return (
     <>
       <div className="home-page">
@@ -22,25 +38,40 @@ export default async function Home() {
               <div className="feed-toggle">
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
-                    <a className="nav-link active" href="#">
-                      Your Feed
-                    </a>
+                    {user && (
+                      <Link
+                        href={{ pathname: "/", query: { feed: "" } }}
+                        className={feed === "" ? "nav-link active" : "nav-link"}
+                      >
+                        Your Feed
+                      </Link>
+                    )}
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="#">
+                    <Link
+                      href={{ pathname: "/" }}
+                      className={feed === undefined && !tag ? "nav-link active" : "nav-link"}
+                    >
                       Global Feed
-                    </a>
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    {tag && (
+                      <Link href={{ pathname: "/", query: { tag } }} className="nav-link active">
+                        # {tag}
+                      </Link>
+                    )}
                   </li>
                 </ul>
               </div>
-              {data.articlesCount === 0 ? (
+              {data.articles.length === 0 ? (
                 <div className="article-preview">No articles are here... yet.</div>
               ) : (
                 <>
                   {data.articles.map((article: ArticleItem) => (
                     <ArticlePreview article={article} key={article.slug} />
                   ))}
-                  <Pagination count={data.articlesCount} page={1} />
+                  <Pagination count={data.articlesCount} page={page} />
                 </>
               )}
             </div>

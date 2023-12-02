@@ -4,19 +4,45 @@ import { ARTICLE_PAGE_LIMIT } from "@/utils/constants";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface IArticlesParams {
-  limit?: number;
-  offset?: number;
+  pageSize?: number;
+  page?: number;
+  tag?: string;
+  feed?: string;
 }
 
 const defaultImage = process.env.DEFAULT_USER_AVATAR || "";
 
 export default async function getArticles(params: IArticlesParams): Promise<ArticlesResp> {
-  const { limit = ARTICLE_PAGE_LIMIT, offset = 0 } = params;
+  const { pageSize = ARTICLE_PAGE_LIMIT, page = 1 } = params;
+  const limit = pageSize;
+  const offset = (page - 1) * ARTICLE_PAGE_LIMIT;
 
   const currentUser = await getCurrentUser();
   const userId = currentUser?.id;
 
   let query: any = {};
+  if (params.tag) {
+    query = {
+      tagList: {
+        some: {
+          tag: {
+            name: params.tag,
+          },
+        },
+      },
+    };
+  }
+  if (params.feed) {
+    query = {
+      author: {
+        followedBy: {
+          some: {
+            followerId: userId,
+          },
+        },
+      },
+    };
+  }
 
   const articlesCount = await prisma.article.count({
     where: query,

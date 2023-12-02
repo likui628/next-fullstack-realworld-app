@@ -1,4 +1,5 @@
 import { ARTICLE_PAGE_LIMIT } from "@/utils/constants";
+import QueryLink from "@/components/common/QueryLink";
 
 interface PaginationProps {
   count: number;
@@ -14,9 +15,9 @@ const Pagination = ({ count, page }: PaginationProps) => {
       <ul className="pagination">
         {countArray.map((_, index) => (
           <li key={index} className={page === index + 1 ? "page-item active" : "page-item"}>
-            <a className="page-link" href="#">
+            <QueryLink reserved query={{ page: index + 1 }} key={index} className="page-link">
               {index + 1}
-            </a>
+            </QueryLink>
           </li>
         ))}
       </ul>

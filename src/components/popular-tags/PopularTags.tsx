@@ -1,4 +1,5 @@
 import { prisma } from "@/utils/connect";
+import QueryLink from "@/components/common/QueryLink";
 
 const PopularTags = async () => {
   const tags = await prisma.tag.findMany();
@@ -7,9 +8,9 @@ const PopularTags = async () => {
       <p>Popular Tags</p>
       <div className="tag-list">
         {tags.map((tag) => (
-          <a href="" key={tag.id} className="tag-pill tag-default">
+          <QueryLink query={{ tag: `${tag.name}` }} key={tag.id} className="tag-pill tag-default">
             {tag.name}
-          </a>
+          </QueryLink>
         ))}
       </div>
     </div>
