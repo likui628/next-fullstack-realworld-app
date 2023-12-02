@@ -3,6 +3,7 @@ import Footer from "@/components/footer/Footer";
 import { ChildrenProps } from "@/types/props";
 import "./global.css";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { AuthProvider } from "@/components/common/AuthProvider";
 
 export const metadata = {
   title: "Home | next.js realworld example app",
@@ -14,9 +15,11 @@ export default async function RootLayout({ children }: ChildrenProps) {
   return (
     <html lang="en">
       <body>
-        <Header currentUser={currentUser} />
-        {children}
-        <Footer />
+        <AuthProvider currentUser={currentUser}>
+          <Header currentUser={currentUser} />
+          {children}
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

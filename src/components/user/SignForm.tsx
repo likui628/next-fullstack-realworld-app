@@ -3,7 +3,6 @@
 import ListErrors from "@/components/common/ListErrors";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/providers/AuthProvider";
 import { useFetch } from "@/hooks/useFetch";
 import { signIn } from "next-auth/react";
 
@@ -18,7 +17,6 @@ const SignForm = ({ isRegister }: SignFormProps) => {
 
   const { loading, data, errors, request } = useFetch<{ user: any }>();
 
-  const { login } = useAuth();
   const router = useRouter();
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -27,8 +25,6 @@ const SignForm = ({ isRegister }: SignFormProps) => {
       const formData = { user: { username, email, password } };
       await request("/users", "POST", formData);
     } else {
-      // const formData = { user: { email, password } };
-      // await request("/users/login", "POST", formData);
       signIn("credentials", {
         email,
         password,
@@ -39,10 +35,6 @@ const SignForm = ({ isRegister }: SignFormProps) => {
         }
       });
     }
-    // if (data) {
-    //   login(data.user.token);
-    //   router.push("/");
-    // }
   };
   return (
     <>

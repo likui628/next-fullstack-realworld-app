@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { User } from ".prisma/client";
+import { CurrentUser } from "@/types/server";
 
 interface HeaderProps {
-  currentUser?: User | null;
+  currentUser?: CurrentUser | null;
 }
 
 const Header = ({ currentUser }: HeaderProps) => {

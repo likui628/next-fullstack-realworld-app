@@ -27,3 +27,7 @@ export interface CommentItem extends Omit<Comment, "createdAt" | "updatedAt"> {
 export interface CommentsResp {
   comments: CommentItem[];
 }
+
+export interface CurrentUser extends Omit<User, "password"> {
+  image: string;
+}

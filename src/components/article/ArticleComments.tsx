@@ -5,20 +5,14 @@ import { formatTime } from "@/utils/format";
 import { useEffect, useState } from "react";
 import { CommentItem, CommentsResp } from "@/types/server";
 import { fetchWrapper } from "@/utils/fetch";
+import { useAuth } from "@/components/common/AuthProvider";
 
 interface ArticleCommentsProps {
   slug: string;
 }
 
 const ArticleComments = ({ slug }: ArticleCommentsProps) => {
-  // todo auth hooks
-  const isLogin = true;
-  const user = {
-    username: "pdd_is_shit",
-    bio: null,
-    image: "https://api.realworld.io/images/smiley-cyrus.jpeg",
-    following: false,
-  };
+  const { currentUser } = useAuth();
 
   const [comments, setComments] = useState<CommentItem[]>([]);
 
@@ -38,7 +32,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
   return (
     <div className="row">
       <div className="col-xs-12 col-md-8 offset-md-2">
-        {isLogin ? (
+        {currentUser ? (
           <>
             <form className="card comment-form">
               <div className="card-block">
@@ -51,7 +45,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                 />
               </div>
               <div className="card-footer">
-                <img alt="" src={user.image} className="comment-author-img" />
+                <img alt="" src={currentUser.image || ""} className="comment-author-img" />
                 <button className="btn btn-sm btn-primary" type="submit">
                   Post Comment
                 </button>
@@ -71,9 +65,11 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                     {comment.author.username}
                   </Link>
                   <span className="date-posted">{formatTime(comment.updatedAt)}</span>
-                  <span className="mod-options" onClick={() => handleDelete(comment.id)}>
-                    <i className="ion-trash-a"></i>
-                  </span>
+                  {currentUser.id === comment.id && (
+                    <span className="mod-options" onClick={() => handleDelete(comment.id)}>
+                      <i className="ion-trash-a"></i>
+                    </span>
+                  )}
                 </div>
               </div>
             ))}
