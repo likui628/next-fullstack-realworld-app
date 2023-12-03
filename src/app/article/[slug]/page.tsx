@@ -3,9 +3,16 @@ import ArticleBanner from "@/components/article/ArticleBanner";
 import ArticleActions from "@/components/article/ArticleActions";
 import ArticleBody from "@/components/article/ArticleBody";
 import ArticleComments from "@/components/article/ArticleComments";
+import { Metadata } from "next";
 
 interface ArticleProps {
   params: { slug: string };
+}
+
+export async function generateMetadata({ params }: ArticleProps): Promise<Metadata> {
+  const data = await getArticle({ slug: params.slug });
+
+  return data ? { title: data.title } : {};
 }
 
 const articlePage = async ({ params }: ArticleProps) => {
