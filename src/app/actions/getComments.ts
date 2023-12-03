@@ -1,5 +1,5 @@
 import { prisma } from "@/utils/connect";
-import { defaultImage } from "@/utils/constants";
+import { userMapper } from "@/app/api/mapper";
 
 interface IArticleParams {
   slug: string;
@@ -19,17 +19,11 @@ export async function getComments(params: IArticleParams) {
   });
 
   return comments.map((comment) => {
-    const { username, bio, image = defaultImage } = comment.author;
     return {
       ...comment,
       createdAt: comment.createdAt.toISOString(),
       updatedAt: comment.updatedAt.toISOString(),
-      author: {
-        username,
-        bio,
-        image: image || defaultImage,
-        following: false,
-      },
+      author: userMapper(comment.author),
     };
   });
 }

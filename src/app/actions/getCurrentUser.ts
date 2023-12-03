@@ -1,8 +1,7 @@
 import { prisma } from "@/utils/connect";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { defaultImage } from "@/utils/constants";
-import { CurrentUser } from "@/types/server";
+import { userMapper } from "@/app/api/mapper";
 
 export async function getSession() {
   return await getServerSession(authOptions);
@@ -26,11 +25,7 @@ export default async function getCurrentUser() {
       return null;
     }
 
-    return {
-      ...currentUser,
-      image: currentUser.image || defaultImage,
-      password: undefined,
-    } as CurrentUser;
+    return userMapper(currentUser);
   } catch (error: any) {
     return null;
   }

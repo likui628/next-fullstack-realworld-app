@@ -1,7 +1,8 @@
 import { prisma } from "@/utils/connect";
 import { ArticlesResp } from "@/types/server";
-import { ARTICLE_PAGE_LIMIT, defaultImage } from "@/utils/constants";
+import { ARTICLE_PAGE_LIMIT } from "@/utils/constants";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { userMapper } from "@/app/api/mapper";
 
 interface IArticlesParams {
   pageSize?: number;
@@ -88,8 +89,7 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
         createdAt: article.createdAt.toISOString(),
         updatedAt: article.updatedAt.toISOString(),
         author: {
-          ...article.author,
-          image: article.author.image || defaultImage,
+          ...userMapper(article.author),
           following,
         },
         tagList: article.tagList.map((tag) => tag.tag.name),

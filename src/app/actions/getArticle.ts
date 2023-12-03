@@ -1,6 +1,6 @@
 import { prisma } from "@/utils/connect";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { defaultImage } from "@/utils/constants";
+import { userMapper } from "@/app/api/mapper";
 
 interface IArticleParams {
   slug: string;
@@ -48,8 +48,7 @@ export async function getArticle(params: IArticleParams) {
       createdAt: data.createdAt.toISOString(),
       updatedAt: data.updatedAt.toISOString(),
       author: {
-        ...data.author,
-        image: data.author.image || defaultImage,
+        ...userMapper(data.author),
         following,
       },
       tagList: data.tagList.map((tag) => tag.tag.name),

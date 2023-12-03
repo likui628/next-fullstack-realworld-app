@@ -14,7 +14,6 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
   const [article, setArticle] = useState(articleInit);
 
   const handleFavorite = (newArticle: ArticleItem) => {
-    console.log(newArticle.favorited);
     setArticle({ ...newArticle });
   };
   return (

@@ -3,7 +3,7 @@ import { Response } from "@/app/api/response";
 import { getComments } from "@/app/actions/getComments";
 import { prisma } from "@/utils/connect";
 import getCurrentUser from "@/app/actions/getCurrentUser";
-import { dateMapper, userMapper } from "@/app/api/mapper";
+import { userMapper } from "@/app/api/mapper";
 
 interface IParams {
   slug: string;
@@ -43,7 +43,8 @@ export const POST = async (req: NextRequest, { params }: { params: IParams }) =>
 
   const comment = {
     ...data,
-    ...dateMapper(data),
+    createdAt: data.createdAt.toISOString(),
+    updatedAt: data.updatedAt.toISOString(),
     author: userMapper(data.author),
   };
 
