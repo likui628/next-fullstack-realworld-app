@@ -5,6 +5,7 @@ import { ArticleItem } from "@/types/server";
 import Pagination from "@/components/article/Pagination";
 import Link from "next/link";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import QueryLink from "@/components/common/QueryLink";
 
 interface HomeProps {
   searchParams: {
@@ -39,21 +40,21 @@ export default async function Home({ searchParams }: HomeProps) {
                 <ul className="nav nav-pills outline-active">
                   <li className="nav-item">
                     {user && (
-                      <Link
-                        href={{ pathname: "/", query: { feed: "" } }}
-                        className={feed === "" ? "nav-link active" : "nav-link"}
+                      <QueryLink
+                        query={{ feed: "feed" }}
+                        className={feed === "feed" ? "nav-link active" : "nav-link"}
                       >
                         Your Feed
-                      </Link>
+                      </QueryLink>
                     )}
                   </li>
                   <li className="nav-item">
-                    <Link
-                      href={{ pathname: "/" }}
-                      className={feed === undefined && !tag ? "nav-link active" : "nav-link"}
+                    <QueryLink
+                      query={{ feed: "global" }}
+                      className={feed !== "feed" && !tag ? "nav-link active" : "nav-link"}
                     >
                       Global Feed
-                    </Link>
+                    </QueryLink>
                   </li>
                   <li className="nav-item">
                     {tag && (

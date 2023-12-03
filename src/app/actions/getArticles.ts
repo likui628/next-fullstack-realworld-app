@@ -30,7 +30,7 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
       },
     };
   }
-  if (params.feed) {
+  if (params.feed === "feed") {
     query = {
       author: {
         followedBy: {
