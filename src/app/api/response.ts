@@ -8,4 +8,8 @@ export class Response {
   static error(message: string | string[], status = 404): NextResponse {
     return NextResponse.json({ errors: Array.isArray(message) ? message : [message] }, { status });
   }
+
+  static unauthorized(): NextResponse {
+    return NextResponse.json({ errors: ["Unauthorized"] }, { status: 401 });
+  }
 }

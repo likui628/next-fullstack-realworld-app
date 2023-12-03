@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { formatTime } from "@/utils/format";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CommentItem, CommentsResp } from "@/types/server";
 import { fetchWrapper } from "@/utils/fetch";
 import { useAuth } from "@/components/common/AuthProvider";
@@ -29,12 +29,20 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
     });
   };
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    fetchWrapper(`/articles/${slug}/comments`, "POST", { comment }).then((res) => {
+      setComments([res.comment, ...comments]);
+      setComment("");
+    });
+  };
+
   return (
     <div className="row">
       <div className="col-xs-12 col-md-8 offset-md-2">
         {currentUser ? (
           <>
-            <form className="card comment-form">
+            <form className="card comment-form" onSubmit={handleSubmit}>
               <div className="card-block">
                 <textarea
                   className="form-control"
@@ -65,7 +73,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                     {comment.author.username}
                   </Link>
                   <span className="date-posted">{formatTime(comment.updatedAt)}</span>
-                  {currentUser.id === comment.id && (
+                  {currentUser.id === comment.author.id && (
                     <span className="mod-options" onClick={() => handleDelete(comment.id)}>
                       <i className="ion-trash-a"></i>
                     </span>
