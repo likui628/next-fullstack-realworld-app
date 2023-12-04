@@ -3,7 +3,7 @@ import Link from "next/link";
 import SignForm from "@/components/user/SignForm";
 
 export const metadata: Metadata = {
-  title: "Login | next.js realworld example app",
+  title: "Login",
 };
 
 const Login: NextPage = () => {

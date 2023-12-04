@@ -4,7 +4,7 @@ import SignOutButton from "@/components/common/SignOutButton";
 import SettingForm from "@/components/user/SettingForm";
 
 export const metadata: Metadata = {
-  title: "Settings | next.js realworld example app",
+  title: "Settings",
 };
 
 const Settings = async () => {
