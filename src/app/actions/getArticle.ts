@@ -1,6 +1,7 @@
 import { prisma } from "@/utils/connect";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { userMapper } from "@/app/api/mapper";
+import { Response } from "@/app/api/response";
 
 interface IArticleParams {
   slug: string;
@@ -55,5 +56,7 @@ export async function getArticle(params: IArticleParams) {
       favorited,
       favoritesCount: data._count.favoritedBy,
     };
+  } else {
+    throw Error("Not found");
   }
 }
