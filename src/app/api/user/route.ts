@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { Response } from '@/app/api/response'
+import { ApiResponse } from '@/app/api/response'
 import { prisma } from '@/libs/prisma'
 import { userMapper } from '@/app/api/mapper'
 
@@ -19,5 +19,5 @@ export async function PUT(req: NextRequest) {
     },
     data,
   })
-  return Response.ok({ user: userMapper(user) })
+  return ApiResponse.ok({ user: userMapper(user) })
 }

@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { Response } from '@/app/api/response'
+import { ApiResponse } from '@/app/api/response'
 import { getComments } from '@/app/actions/getComments'
 import { prisma } from '@/libs/prisma'
 import getCurrentUser from '@/app/actions/getCurrentUser'
@@ -14,7 +14,7 @@ export const GET = async (
   { params }: { params: IParams },
 ) => {
   const comments = await getComments({ slug: params.slug })
-  return Response.ok({ comments })
+  return ApiResponse.ok({ comments })
 }
 
 export const POST = async (
@@ -24,7 +24,7 @@ export const POST = async (
   const body = await req.json()
   const currentUser = await getCurrentUser()
   if (!currentUser) {
-    return Response.unauthorized()
+    return ApiResponse.unauthorized()
   }
   const article = await prisma.article.findUnique({
     where: { slug: params.slug },
@@ -33,7 +33,7 @@ export const POST = async (
     },
   })
   if (!article) {
-    throw Error('article not exists.')
+    return ApiResponse.notFound('Article not exists')
   }
 
   const data = await prisma.comment.create({
@@ -54,5 +54,5 @@ export const POST = async (
     author: userMapper(data.author),
   }
 
-  return Response.ok({ comment })
+  return ApiResponse.ok({ comment })
 }

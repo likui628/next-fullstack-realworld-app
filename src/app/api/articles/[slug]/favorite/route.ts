@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/libs/prisma'
-import { Response } from '@/app/api/response'
+import { ApiResponse } from '@/app/api/response'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import { getArticle } from '@/app/actions/getArticle'
 
@@ -14,7 +14,7 @@ export const POST = async (
 ) => {
   const currentUser = await getCurrentUser()
   if (!currentUser) {
-    return Response.error(['user not login'], 403)
+    return ApiResponse.unauthorized()
   }
 
   const article = await prisma.article.findUnique({
@@ -23,7 +23,7 @@ export const POST = async (
     },
   })
   if (!article) {
-    return Response.error(['article not exists'])
+    return ApiResponse.notFound('Article not exists')
   }
 
   const articleId = article.id
@@ -40,7 +40,7 @@ export const POST = async (
   }
 
   const newArticle = await getArticle({ slug: params.slug })
-  return Response.ok(newArticle)
+  return ApiResponse.ok(newArticle)
 }
 
 export const DELETE = async (
@@ -58,7 +58,7 @@ export const DELETE = async (
     },
   })
   if (!article) {
-    return Response.error(['article not exists'])
+    return ApiResponse.notFound('Article not exists')
   }
 
   const articleId = article.id
@@ -77,5 +77,5 @@ export const DELETE = async (
   }
 
   const newArticle = await getArticle({ slug: params.slug })
-  return Response.ok(newArticle)
+  return ApiResponse.ok(newArticle)
 }

@@ -1,7 +1,6 @@
 import { prisma } from '@/libs/prisma'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import { userMapper } from '@/app/api/mapper'
-import { Response } from '@/app/api/response'
 
 interface IArticleParams {
   slug: string
@@ -40,25 +39,25 @@ export async function getArticle(params: IArticleParams) {
       },
     },
   })
-  if (data) {
-    const following = data.author.followedBy.some(
-      (follow) => follow.followerId === userId,
-    )
-    const favorited = data.favoritedBy.some((fav) => fav.userId === userId)
+  if (!data) {
+    throw new Error('Article not found')
+  }
 
-    return {
-      ...data,
-      createdAt: data.createdAt.toISOString(),
-      updatedAt: data.updatedAt.toISOString(),
-      author: {
-        ...userMapper(data.author),
-        following,
-      },
-      tagList: data.tagList.map((tag) => tag.tag.name),
-      favorited,
-      favoritesCount: data._count.favoritedBy,
-    }
-  } else {
-    throw Error('Not found')
+  const following = data.author.followedBy.some(
+    (follow) => follow.followerId === userId,
+  )
+  const favorited = data.favoritedBy.some((fav) => fav.userId === userId)
+
+  return {
+    ...data,
+    createdAt: data.createdAt.toISOString(),
+    updatedAt: data.updatedAt.toISOString(),
+    author: {
+      ...userMapper(data.author),
+      following,
+    },
+    tagList: data.tagList.map((tag) => tag.tag.name),
+    favorited,
+    favoritesCount: data._count.favoritedBy,
   }
 }

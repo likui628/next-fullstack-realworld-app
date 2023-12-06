@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/libs/prisma'
-import { Response } from '@/app/api/response'
+import { ApiResponse } from '@/app/api/response'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 
 export const POST = async (req: NextRequest) => {
@@ -14,7 +14,7 @@ export const POST = async (req: NextRequest) => {
       },
     })
 
-    return Response.ok({
+    return ApiResponse.ok({
       user: {
         ...user,
       },
@@ -24,7 +24,7 @@ export const POST = async (req: NextRequest) => {
       // Error codes
       // https://www.prisma.io/docs/reference/api-reference/error-reference#error-codes
       if (e.code === 'P2002') {
-        return Response.error(['Username or email already exists'], 403)
+        return ApiResponse.badRequest('Username or email already exists')
       }
     }
   }

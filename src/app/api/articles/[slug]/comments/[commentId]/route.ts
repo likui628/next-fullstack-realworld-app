@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { Response } from '@/app/api/response'
+import { ApiResponse } from '@/app/api/response'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import { prisma } from '@/libs/prisma'
 
@@ -14,7 +14,7 @@ export const DELETE = async (
 ) => {
   const currentUser = await getCurrentUser()
   if (!currentUser) {
-    return Response.error(['user not login'], 403)
+    return ApiResponse.forbidden()
   }
 
   try {
@@ -31,8 +31,8 @@ export const DELETE = async (
       },
     })
   } catch (e) {
-    return Response.error('Delete comment fail')
+    return ApiResponse.badRequest('Delete comment fail')
   }
 
-  return Response.ok({})
+  return ApiResponse.noContent()
 }
