@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server'
-import { prisma } from '@/utils/connect'
+import { prisma } from '@/libs/prisma'
 import { Response } from '@/app/api/response'
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime/library'
 

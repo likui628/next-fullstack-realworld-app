@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/connect'
+import { prisma } from '@/libs/prisma'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import { userMapper } from '@/app/api/mapper'
 import { Response } from '@/app/api/response'

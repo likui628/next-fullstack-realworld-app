@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/connect'
+import { prisma } from '@/libs/prisma'
 import QueryLink from '@/components/common/QueryLink'
 
 const PopularTags = async () => {

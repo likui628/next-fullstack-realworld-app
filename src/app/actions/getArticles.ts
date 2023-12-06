@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/connect'
+import { prisma } from '@/libs/prisma'
 import { ArticlesResp } from '@/types/server'
 import { ARTICLE_PAGE_LIMIT } from '@/utils/constants'
 import getCurrentUser from '@/app/actions/getCurrentUser'

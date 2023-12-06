@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { Response } from '@/app/api/response'
-import { prisma } from '@/utils/connect'
+import { prisma } from '@/libs/prisma'
 import { userMapper } from '@/app/api/mapper'
 
 export async function PUT(req: NextRequest) {

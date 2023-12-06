@@ -1,4 +1,4 @@
-import { prisma } from '@/utils/connect'
+import { prisma } from '@/libs/prisma'
 import { userMapper } from '@/app/api/mapper'
 
 interface IArticleParams {
