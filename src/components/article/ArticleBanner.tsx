@@ -1,7 +1,7 @@
-import { ArticleItem } from "@/types/server";
+import { ArticleItem } from '@/types/server'
 
 interface ArticleBannerProps {
-  article: ArticleItem;
+  article: ArticleItem
 }
 
 const ArticleBanner = ({ article }: ArticleBannerProps) => {
@@ -13,7 +13,7 @@ const ArticleBanner = ({ article }: ArticleBannerProps) => {
         {/*<ArticleMeta article={article} onChange={onChange} />*/}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ArticleBanner;
+export default ArticleBanner

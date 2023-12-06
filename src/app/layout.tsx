@@ -1,21 +1,21 @@
-import Header from "@/components/header/Header";
-import Footer from "@/components/footer/Footer";
-import { ChildrenProps } from "@/types/props";
-import "./global.css";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import { AuthProvider } from "@/components/common/AuthProvider";
-import { Metadata } from "next";
+import Header from '@/components/header/Header'
+import Footer from '@/components/footer/Footer'
+import { ChildrenProps } from '@/types/props'
+import './global.css'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import { AuthProvider } from '@/components/common/AuthProvider'
+import { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | next.js RealWorld example app",
-    default: "Conduit | next.js RealWorld example app", // a default is required when creating a template
+    template: '%s | next.js RealWorld example app',
+    default: 'Conduit | next.js RealWorld example app', // a default is required when creating a template
   },
-  description: "Powered by Next.js",
-};
+  description: 'Powered by Next.js',
+}
 
 export default async function RootLayout({ children }: ChildrenProps) {
-  const currentUser = await getCurrentUser();
+  const currentUser = await getCurrentUser()
   return (
     <html lang="en">
       <body>
@@ -26,5 +26,5 @@ export default async function RootLayout({ children }: ChildrenProps) {
         </AuthProvider>
       </body>
     </html>
-  );
+  )
 }

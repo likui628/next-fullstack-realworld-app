@@ -1,15 +1,15 @@
-import { prisma } from "@/utils/connect";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import { userMapper } from "@/app/api/mapper";
-import { Response } from "@/app/api/response";
+import { prisma } from '@/utils/connect'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import { userMapper } from '@/app/api/mapper'
+import { Response } from '@/app/api/response'
 
 interface IArticleParams {
-  slug: string;
+  slug: string
 }
 
 export async function getArticle(params: IArticleParams) {
-  const currentUser = await getCurrentUser();
-  const userId = currentUser?.id;
+  const currentUser = await getCurrentUser()
+  const userId = currentUser?.id
 
   const data = await prisma.article.findUnique({
     where: { slug: params.slug },
@@ -39,10 +39,12 @@ export async function getArticle(params: IArticleParams) {
         },
       },
     },
-  });
+  })
   if (data) {
-    const following = data.author.followedBy.some((follow) => follow.followerId === userId);
-    const favorited = data.favoritedBy.some((fav) => fav.userId === userId);
+    const following = data.author.followedBy.some(
+      (follow) => follow.followerId === userId,
+    )
+    const favorited = data.favoritedBy.some((fav) => fav.userId === userId)
 
     return {
       ...data,
@@ -55,8 +57,8 @@ export async function getArticle(params: IArticleParams) {
       tagList: data.tagList.map((tag) => tag.tag.name),
       favorited,
       favoritesCount: data._count.favoritedBy,
-    };
+    }
   } else {
-    throw Error("Not found");
+    throw Error('Not found')
   }
 }

@@ -1,8 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["api.realworld.io"],
+    domains: ['api.realworld.io'],
   },
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig

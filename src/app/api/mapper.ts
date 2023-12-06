@@ -1,8 +1,8 @@
-import { User } from ".prisma/client";
-import { defaultImage } from "@/utils/constants";
+import { User } from '.prisma/client'
+import { defaultImage } from '@/utils/constants'
 
 export function userMapper(user: User) {
-  const { id, username, email, bio, image } = user;
+  const { id, username, email, bio, image } = user
   return {
     id,
     username,
@@ -10,5 +10,5 @@ export function userMapper(user: User) {
     bio,
     image: image || defaultImage,
     following: false,
-  };
+  }
 }

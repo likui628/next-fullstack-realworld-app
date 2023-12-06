@@ -1,10 +1,10 @@
-import { Metadata, NextPage } from "next";
-import Link from "next/link";
-import SignForm from "@/components/user/SignForm";
+import { Metadata, NextPage } from 'next'
+import Link from 'next/link'
+import SignForm from '@/components/user/SignForm'
 
 export const metadata: Metadata = {
-  title: "Register",
-};
+  title: 'Register',
+}
 
 const Register: NextPage = () => {
   return (
@@ -23,6 +23,6 @@ const Register: NextPage = () => {
         </div>
       </div>
     </>
-  );
-};
-export default Register;
+  )
+}
+export default Register

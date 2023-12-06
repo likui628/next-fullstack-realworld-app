@@ -1,32 +1,32 @@
-import { prisma } from "@/utils/connect";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
-import { userMapper } from "@/app/api/mapper";
+import { prisma } from '@/utils/connect'
+import { getServerSession } from 'next-auth'
+import { userMapper } from '@/app/api/mapper'
+import { authOptions } from '@/app/lib/auth'
 
 export async function getSession() {
-  return await getServerSession(authOptions);
+  return await getServerSession(authOptions)
 }
 
 export default async function getCurrentUser() {
   try {
-    const session = await getSession();
+    const session = await getSession()
 
     if (!session?.user?.email) {
-      return null;
+      return null
     }
 
     const currentUser = await prisma.user.findUnique({
       where: {
         email: session.user.email as string,
       },
-    });
+    })
 
     if (!currentUser) {
-      return null;
+      return null
     }
 
-    return userMapper(currentUser);
+    return userMapper(currentUser)
   } catch (error: any) {
-    return null;
+    return null
   }
 }

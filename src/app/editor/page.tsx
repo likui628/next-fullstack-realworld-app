@@ -1,9 +1,9 @@
-import { Metadata } from "next";
-import EditorForm from "@/components/editor/EditorForm";
+import { Metadata } from 'next'
+import EditorForm from '@/components/editor/EditorForm'
 
 export const metadata: Metadata = {
-  title: "Editor",
-};
+  title: 'Editor',
+}
 
 const EditArticle = () => {
   return (
@@ -14,7 +14,7 @@ const EditArticle = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default EditArticle;
+export default EditArticle

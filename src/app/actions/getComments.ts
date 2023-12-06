@@ -1,8 +1,8 @@
-import { prisma } from "@/utils/connect";
-import { userMapper } from "@/app/api/mapper";
+import { prisma } from '@/utils/connect'
+import { userMapper } from '@/app/api/mapper'
 
 interface IArticleParams {
-  slug: string;
+  slug: string
 }
 
 export async function getComments(params: IArticleParams) {
@@ -16,7 +16,7 @@ export async function getComments(params: IArticleParams) {
     include: {
       author: true,
     },
-  });
+  })
 
   return comments.map((comment) => {
     return {
@@ -24,6 +24,6 @@ export async function getComments(params: IArticleParams) {
       createdAt: comment.createdAt.toISOString(),
       updatedAt: comment.updatedAt.toISOString(),
       author: userMapper(comment.author),
-    };
-  });
+    }
+  })
 }

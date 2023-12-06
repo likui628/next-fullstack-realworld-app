@@ -1,15 +1,15 @@
-import { Metadata } from "next";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import SignOutButton from "@/components/common/SignOutButton";
-import SettingForm from "@/components/user/SettingForm";
+import { Metadata } from 'next'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import SignOutButton from '@/components/common/SignOutButton'
+import SettingForm from '@/components/user/SettingForm'
 
 export const metadata: Metadata = {
-  title: "Settings",
-};
+  title: 'Settings',
+}
 
 const Settings = async () => {
-  const currentUser = await getCurrentUser();
-  if (!currentUser) return null;
+  const currentUser = await getCurrentUser()
+  if (!currentUser) return null
 
   return (
     <div className="settings-page">
@@ -24,7 +24,7 @@ const Settings = async () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Settings;
+export default Settings

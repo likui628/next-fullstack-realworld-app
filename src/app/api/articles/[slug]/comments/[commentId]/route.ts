@@ -1,17 +1,20 @@
-import { NextRequest } from "next/server";
-import { Response } from "@/app/api/response";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import { prisma } from "@/utils/connect";
+import { NextRequest } from 'next/server'
+import { Response } from '@/app/api/response'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import { prisma } from '@/utils/connect'
 
 interface IParams {
-  slug: string;
-  commentId: string;
+  slug: string
+  commentId: string
 }
 
-export const DELETE = async (req: NextRequest, { params }: { params: IParams }) => {
-  const currentUser = await getCurrentUser();
+export const DELETE = async (
+  req: NextRequest,
+  { params }: { params: IParams },
+) => {
+  const currentUser = await getCurrentUser()
   if (!currentUser) {
-    return Response.error(["user not login"], 403);
+    return Response.error(['user not login'], 403)
   }
 
   try {
@@ -26,10 +29,10 @@ export const DELETE = async (req: NextRequest, { params }: { params: IParams }) 
       data: {
         del: true,
       },
-    });
+    })
   } catch (e) {
-    return Response.error("Delete comment fail");
+    return Response.error('Delete comment fail')
   }
 
-  return Response.ok({});
-};
+  return Response.ok({})
+}

@@ -1,7 +1,7 @@
-import { marked } from "marked";
+import { marked } from 'marked'
 
 interface ArticleBodyProps {
-  body: string;
+  body: string
 }
 
 const ArticleBody = ({ body }: ArticleBodyProps) => {
@@ -14,7 +14,7 @@ const ArticleBody = ({ body }: ArticleBodyProps) => {
         }}
       />
     </div>
-  );
-};
+  )
+}
 
-export default ArticleBody;
+export default ArticleBody

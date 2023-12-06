@@ -1,5 +1,5 @@
 const ArticleActions = () => {
-  return <div></div>;
-};
+  return <div></div>
+}
 
-export default ArticleActions;
+export default ArticleActions

@@ -1,28 +1,28 @@
-import PopularTags from "@/components/popular-tags/PopularTags";
-import ArticlePreview from "@/components/article/ArticlePreview";
-import getArticles from "@/app/actions/getArticles";
-import { ArticleItem } from "@/types/server";
-import Pagination from "@/components/article/Pagination";
-import Link from "next/link";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import QueryLink from "@/components/common/QueryLink";
+import PopularTags from '@/components/popular-tags/PopularTags'
+import ArticlePreview from '@/components/article/ArticlePreview'
+import getArticles from '@/app/actions/getArticles'
+import { ArticleItem } from '@/types/server'
+import Pagination from '@/components/article/Pagination'
+import Link from 'next/link'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import QueryLink from '@/components/common/QueryLink'
 
 interface HomeProps {
   searchParams: {
-    page?: string;
-    tag?: string;
-    feed?: string;
-  };
+    page?: string
+    tag?: string
+    feed?: string
+  }
 }
 
 export default async function Home({ searchParams }: HomeProps) {
-  const page = Number(searchParams.page) || 1;
-  const tag = searchParams.tag;
-  const feed = searchParams.feed;
+  const page = Number(searchParams.page) || 1
+  const tag = searchParams.tag
+  const feed = searchParams.feed
 
-  const user = await getCurrentUser();
+  const user = await getCurrentUser()
 
-  const data = await getArticles({ page, tag, feed });
+  const data = await getArticles({ page, tag, feed })
   return (
     <>
       <div className="home-page">
@@ -41,8 +41,10 @@ export default async function Home({ searchParams }: HomeProps) {
                   <li className="nav-item">
                     {user && (
                       <QueryLink
-                        query={{ feed: "feed" }}
-                        className={feed === "feed" ? "nav-link active" : "nav-link"}
+                        query={{ feed: 'feed' }}
+                        className={
+                          feed === 'feed' ? 'nav-link active' : 'nav-link'
+                        }
                       >
                         Your Feed
                       </QueryLink>
@@ -50,15 +52,20 @@ export default async function Home({ searchParams }: HomeProps) {
                   </li>
                   <li className="nav-item">
                     <QueryLink
-                      query={{ feed: "global" }}
-                      className={feed !== "feed" && !tag ? "nav-link active" : "nav-link"}
+                      query={{ feed: 'global' }}
+                      className={
+                        feed !== 'feed' && !tag ? 'nav-link active' : 'nav-link'
+                      }
                     >
                       Global Feed
                     </QueryLink>
                   </li>
                   <li className="nav-item">
                     {tag && (
-                      <Link href={{ pathname: "/", query: { tag } }} className="nav-link active">
+                      <Link
+                        href={{ pathname: '/', query: { tag } }}
+                        className="nav-link active"
+                      >
                         # {tag}
                       </Link>
                     )}
@@ -66,7 +73,9 @@ export default async function Home({ searchParams }: HomeProps) {
                 </ul>
               </div>
               {data.articles.length === 0 ? (
-                <div className="article-preview">No articles are here... yet.</div>
+                <div className="article-preview">
+                  No articles are here... yet.
+                </div>
               ) : (
                 <>
                   {data.articles.map((article: ArticleItem) => (
@@ -83,5 +92,5 @@ export default async function Home({ searchParams }: HomeProps) {
         </div>
       </div>
     </>
-  );
+  )
 }

@@ -1,34 +1,34 @@
-"use client";
+'use client'
 
-import ListErrors from "@/components/common/ListErrors";
-import React, { useState } from "react";
-import { useFetch } from "@/hooks/useFetch";
-import { signIn } from "next-auth/react";
+import ListErrors from '@/components/common/ListErrors'
+import React, { useState } from 'react'
+import { useFetch } from '@/hooks/useFetch'
+import { signIn } from 'next-auth/react'
 
 interface SignFormProps {
-  isRegister?: boolean;
+  isRegister?: boolean
 }
 
 const SignForm = ({ isRegister }: SignFormProps) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const { loading, data, errors, request } = useFetch<{ user: any }>();
+  const { loading, data, errors, request } = useFetch<{ user: any }>()
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     if (isRegister) {
-      const formData = { user: { username, email, password } };
-      await request("/users", "POST", formData);
+      const formData = { user: { username, email, password } }
+      await request('/users', 'POST', formData)
     }
-    await signIn("credentials", {
+    await signIn('credentials', {
       email,
       password,
-      callbackUrl: "/",
-    });
-  };
+      callbackUrl: '/',
+    })
+  }
   return (
     <>
       <ListErrors errors={errors} />
@@ -76,11 +76,11 @@ const SignForm = ({ isRegister }: SignFormProps) => {
           data-testid="btn-submit"
           disabled={loading}
         >
-          {isRegister ? "Sign up" : "Sign in"}
+          {isRegister ? 'Sign up' : 'Sign in'}
         </button>
       </form>
     </>
-  );
-};
+  )
+}
 
-export default SignForm;
+export default SignForm

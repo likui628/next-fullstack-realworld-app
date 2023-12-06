@@ -1,46 +1,51 @@
-"use client";
+'use client'
 
-import React, { useState } from "react";
-import { ArticleItem } from "@/types/server";
+import React, { useState } from 'react'
+import { ArticleItem } from '@/types/server'
+import { fetchWrapper } from '@/utils/fetch'
 
 interface EditorForm {
-  slug?: string;
-  title: string;
-  description: string;
-  body: string;
-  tagList: string[];
+  slug?: string
+  title: string
+  description: string
+  body: string
+  tagList: string[]
 }
 
 interface EditorFormProps {
-  article?: ArticleItem;
+  article?: ArticleItem
 }
 
 const EditorForm = (props: EditorFormProps) => {
-  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<string[]>([])
+  const [loading, setLoading] = useState(false)
   const [article, setArticle] = useState<EditorForm>({
-    slug: props.article?.slug || "",
-    title: props.article?.title || "",
-    description: props.article?.description || "",
-    body: props.article?.body || "",
+    slug: props.article?.slug || '',
+    title: props.article?.title || '',
+    description: props.article?.description || '',
+    body: props.article?.body || '',
     tagList: props.article?.tagList || [],
-  });
-  const [tag, setTag] = useState("");
+  })
+  const [tag, setTag] = useState('')
 
   const onChange = (newArticle: Partial<typeof article>) => {
-    setArticle((prev) => ({ ...prev, ...newArticle }));
-  };
+    setArticle((prev) => ({ ...prev, ...newArticle }))
+  }
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const data = await fetchWrapper('/articles', 'POST', {
+      article,
+    })
+  }
 
   return (
     <div className="col-md-10 offset-md-1 col-xs-12">
-      {/*<ul className="error-messages">*/}
-      {/*  {errors.map((err, index) => (*/}
-      {/*    <li key={index}>{err}</li>*/}
-      {/*  ))}*/}
-      {/*</ul>*/}
+      <ul className="error-messages">
+        {errors.map((err, index) => (
+          <li key={index}>{err}</li>
+        ))}
+      </ul>
       <form onSubmit={handleSubmit}>
         <fieldset>
           <fieldset className="form-group">
@@ -84,20 +89,23 @@ const EditorForm = (props: EditorFormProps) => {
             />
             <div className="tag-list">
               {article.tagList.map((tag) => (
-                <span className="tag-default tag-pill">
+                <span className="tag-default tag-pill" key={tag}>
                   <i className="ion-close-round"></i>
                   {tag}
                 </span>
               ))}
             </div>
           </fieldset>
-          <button className="btn btn-lg pull-xs-right btn-primary" type="submit">
+          <button
+            className="btn btn-lg pull-xs-right btn-primary"
+            type="submit"
+          >
             Publish Article
           </button>
         </fieldset>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default EditorForm;
+export default EditorForm

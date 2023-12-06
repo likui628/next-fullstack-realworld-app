@@ -1,27 +1,27 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || ''
 
 const basicOptions = {
   headers: {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
   },
-};
+}
 
 export const fetchWrapper = async <T = any>(
   url: string,
-  method: string = "GET",
+  method: string = 'GET',
   body?: any,
-  options?: RequestInit
+  options?: RequestInit,
 ) => {
   const resp = await fetch(`${BASE_URL}${url}`, {
     ...basicOptions,
     method,
     ...options,
     body: body && JSON.stringify(body),
-  });
-  const data = await resp.json();
+  })
+  const data = await resp.json()
   if (resp.ok) {
-    return data as T;
+    return data as T
   } else {
-    throw data.errors;
+    throw data.errors
   }
-};
+}

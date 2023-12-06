@@ -1,6 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from '@prisma/client'
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 
 const markdown = `
 ## Headers
@@ -32,51 +32,51 @@ _You **can** combine them_
 let message = 'Hello world';
 alert(message);
 \`\`\`
-`;
+`
 
 async function main() {
-  console.log(`Start seeding ...`);
+  console.log(`Start seeding ...`)
   const alice = await prisma.user.upsert({
-    where: { email: "alice@prisma.io" },
+    where: { email: 'alice@prisma.io' },
     update: {},
     create: {
-      username: "Alice",
-      password: "123456",
-      email: "alice@prisma.io",
-      bio: "I like turtles.",
-      image: "https://api.realworld.io/images/demo-avatar.png",
+      username: 'Alice',
+      password: '123456',
+      email: 'alice@prisma.io',
+      bio: 'I like turtles.',
+      image: 'https://api.realworld.io/images/demo-avatar.png',
       articles: {
         create: [
           {
-            title: "How to train your dragon",
-            slug: "how-to-train-your-dragon",
-            description: "Ever wonder how?",
-            body: "You have to believe",
+            title: 'How to train your dragon',
+            slug: 'how-to-train-your-dragon',
+            description: 'Ever wonder how?',
+            body: 'You have to believe',
             tagList: {
               create: [
                 {
                   tag: {
-                    create: { name: "dragons" },
+                    create: { name: 'dragons' },
                   },
                 },
                 {
                   tag: {
-                    create: { name: "training" },
+                    create: { name: 'training' },
                   },
                 },
               ],
             },
           },
           {
-            title: "Markdown syntax guide",
-            slug: "markdown-syntax-guide",
-            description: "",
+            title: 'Markdown syntax guide',
+            slug: 'markdown-syntax-guide',
+            description: '',
             body: markdown,
             tagList: {
               create: [
                 {
                   tag: {
-                    create: { name: "markdown" },
+                    create: { name: 'markdown' },
                   },
                 },
               ],
@@ -85,34 +85,34 @@ async function main() {
         ],
       },
     },
-  });
+  })
 
   const gerome = await prisma.user.upsert({
-    where: { email: "gerome@realworld.io" },
+    where: { email: 'gerome@realworld.io' },
     update: {},
     create: {
-      username: "Gerome",
-      password: "123456",
-      email: "gerome@realworld.io",
-      bio: "Hello followers.",
-      image: "",
+      username: 'Gerome',
+      password: '123456',
+      email: 'gerome@realworld.io',
+      bio: 'Hello followers.',
+      image: '',
       articles: {
         create: [
           {
-            title: "Welcome to RealWorld project",
-            slug: "welcome-to-realWorld-project-1",
-            description: "",
-            body: "See how the exact same Medium.com clone (called Conduit) is built using different frontends and backends. Yes, you can mix and match them, because they all adhere to the same API spec",
+            title: 'Welcome to RealWorld project',
+            slug: 'welcome-to-realWorld-project-1',
+            description: '',
+            body: 'See how the exact same Medium.com clone (called Conduit) is built using different frontends and backends. Yes, you can mix and match them, because they all adhere to the same API spec',
             tagList: {
               create: [
                 {
                   tag: {
-                    create: { name: "welcome" },
+                    create: { name: 'welcome' },
                   },
                 },
                 {
                   tag: {
-                    create: { name: "introduction" },
+                    create: { name: 'introduction' },
                   },
                 },
               ],
@@ -121,16 +121,16 @@ async function main() {
         ],
       },
     },
-  });
-  console.log(`Seeding finished.`);
+  })
+  console.log(`Seeding finished.`)
 }
 
 main()
   .then(async () => {
-    await prisma.$disconnect();
+    await prisma.$disconnect()
   })
   .catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-  });
+    console.error(e)
+    await prisma.$disconnect()
+    process.exit(1)
+  })

@@ -1,22 +1,24 @@
-import { getArticle } from "@/app/actions/getArticle";
-import ArticleBanner from "@/components/article/ArticleBanner";
-import ArticleActions from "@/components/article/ArticleActions";
-import ArticleBody from "@/components/article/ArticleBody";
-import ArticleComments from "@/components/article/ArticleComments";
-import { Metadata } from "next";
+import { getArticle } from '@/app/actions/getArticle'
+import ArticleBanner from '@/components/article/ArticleBanner'
+import ArticleActions from '@/components/article/ArticleActions'
+import ArticleBody from '@/components/article/ArticleBody'
+import ArticleComments from '@/components/article/ArticleComments'
+import { Metadata } from 'next'
 
 interface ArticleProps {
-  params: { slug: string };
+  params: { slug: string }
 }
 
-export async function generateMetadata({ params }: ArticleProps): Promise<Metadata> {
-  const data = await getArticle({ slug: params.slug });
+export async function generateMetadata({
+  params,
+}: ArticleProps): Promise<Metadata> {
+  const data = await getArticle({ slug: params.slug })
 
-  return data ? { title: data.title } : {};
+  return data ? { title: data.title } : {}
 }
 
 const articlePage = async ({ params }: ArticleProps) => {
-  const data = await getArticle({ slug: params.slug });
+  const data = await getArticle({ slug: params.slug })
   return (
     <div className="article-page">
       {data && (
@@ -40,6 +42,6 @@ const articlePage = async ({ params }: ArticleProps) => {
         </>
       )}
     </div>
-  );
-};
-export default articlePage;
+  )
+}
+export default articlePage

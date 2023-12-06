@@ -1,30 +1,33 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { formatTime } from "@/utils/format";
-import { ArticleItem } from "@/types/server";
-import FavoritesButton from "@/components/common/FavoritesButton";
-import { useState } from "react";
+import Link from 'next/link'
+import { formatTime } from '@/utils/format'
+import { ArticleItem } from '@/types/server'
+import FavoritesButton from '@/components/common/FavoritesButton'
+import { useState } from 'react'
 
 interface ArticlePreviewProps {
-  article: ArticleItem;
+  article: ArticleItem
 }
 
 const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
-  const [article, setArticle] = useState(articleInit);
+  const [article, setArticle] = useState(articleInit)
 
   const handleFavorite = (newArticle: ArticleItem) => {
-    setArticle({ ...newArticle });
-  };
+    setArticle({ ...newArticle })
+  }
   return (
     <>
       <div className="article-preview">
         <div className="article-meta">
           <Link href={`/profile/${article.author.username}`}>
-            <img alt="" src={article.author?.image || ""} />
+            <img alt="" src={article.author?.image || ''} />
           </Link>
           <div className="info">
-            <Link href={`/profile/${article.author.username}`} className="author">
+            <Link
+              href={`/profile/${article.author.username}`}
+              className="author"
+            >
               {article.author.username}
             </Link>
             <span className="date">{formatTime(article.updatedAt)}</span>
@@ -45,13 +48,13 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
                 <li className="tag-default tag-pill tag-outline" key={tag}>
                   {tag}
                 </li>
-              );
+              )
             })}
           </ul>
         </Link>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ArticlePreview;
+export default ArticlePreview

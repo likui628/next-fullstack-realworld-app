@@ -1,25 +1,27 @@
-import { prisma } from "@/utils/connect";
-import { ArticlesResp } from "@/types/server";
-import { ARTICLE_PAGE_LIMIT } from "@/utils/constants";
-import getCurrentUser from "@/app/actions/getCurrentUser";
-import { userMapper } from "@/app/api/mapper";
+import { prisma } from '@/utils/connect'
+import { ArticlesResp } from '@/types/server'
+import { ARTICLE_PAGE_LIMIT } from '@/utils/constants'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import { userMapper } from '@/app/api/mapper'
 
 interface IArticlesParams {
-  pageSize?: number;
-  page?: number;
-  tag?: string;
-  feed?: string;
+  pageSize?: number
+  page?: number
+  tag?: string
+  feed?: string
 }
 
-export default async function getArticles(params: IArticlesParams): Promise<ArticlesResp> {
-  const { pageSize = ARTICLE_PAGE_LIMIT, page = 1 } = params;
-  const limit = pageSize;
-  const offset = (page - 1) * ARTICLE_PAGE_LIMIT;
+export default async function getArticles(
+  params: IArticlesParams,
+): Promise<ArticlesResp> {
+  const { pageSize = ARTICLE_PAGE_LIMIT, page = 1 } = params
+  const limit = pageSize
+  const offset = (page - 1) * ARTICLE_PAGE_LIMIT
 
-  const currentUser = await getCurrentUser();
-  const userId = currentUser?.id;
+  const currentUser = await getCurrentUser()
+  const userId = currentUser?.id
 
-  let query: any = {};
+  let query: any = {}
   if (params.tag) {
     query = {
       tagList: {
@@ -29,9 +31,9 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
           },
         },
       },
-    };
+    }
   }
-  if (params.feed === "feed") {
+  if (params.feed === 'feed') {
     query = {
       author: {
         followedBy: {
@@ -40,12 +42,12 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
           },
         },
       },
-    };
+    }
   }
 
   const articlesCount = await prisma.article.count({
     where: query,
-  });
+  })
 
   const data = await prisma.article.findMany({
     where: query,
@@ -77,12 +79,14 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
         },
       },
     },
-  });
+  })
 
   return {
     articles: data.map((article) => {
-      const following = article.author.followedBy.some((follow) => follow.followerId === userId);
-      const favorited = article.favoritedBy.some((fav) => fav.userId === userId);
+      const following = article.author.followedBy.some(
+        (follow) => follow.followerId === userId,
+      )
+      const favorited = article.favoritedBy.some((fav) => fav.userId === userId)
 
       return {
         ...article,
@@ -95,8 +99,8 @@ export default async function getArticles(params: IArticlesParams): Promise<Arti
         tagList: article.tagList.map((tag) => tag.tag.name),
         favorited,
         favoritesCount: article._count.favoritedBy,
-      };
+      }
     }),
     articlesCount,
-  };
+  }
 }
