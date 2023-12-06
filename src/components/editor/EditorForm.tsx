@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import { ArticleItem } from '@/types/server'
 import { fetchWrapper } from '@/utils/fetch'
+import { useRouter } from 'next/navigation'
 
 interface EditorForm {
   slug?: string
@@ -32,11 +33,34 @@ const EditorForm = (props: EditorFormProps) => {
     setArticle((prev) => ({ ...prev, ...newArticle }))
   }
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const data = await fetchWrapper('/articles', 'POST', {
-      article,
+  const addTag = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      setArticle({ ...article, tagList: [...article.tagList, tag] })
+      setTag('')
+    }
+  }
+
+  const removeTag = (tagToRemove: string) => {
+    setArticle({
+      ...article,
+      tagList: [...article.tagList.filter((tag) => tag !== tagToRemove)],
     })
+  }
+
+  const router = useRouter()
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    try {
+      setLoading(true)
+      const data = await fetchWrapper('/articles', 'POST', {
+        article,
+      })
+      router.push(`/article/${data.article.slug}`)
+    } catch (e: any) {
+      setErrors(e.errors)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -46,7 +70,7 @@ const EditorForm = (props: EditorFormProps) => {
           <li key={index}>{err}</li>
         ))}
       </ul>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={(e) => e.preventDefault()}>
         <fieldset>
           <fieldset className="form-group">
             <input
@@ -86,10 +110,15 @@ const EditorForm = (props: EditorFormProps) => {
               value={tag}
               disabled={loading}
               onInput={(e) => setTag(e.currentTarget.value)}
+              onKeyDown={addTag}
             />
             <div className="tag-list">
               {article.tagList.map((tag) => (
-                <span className="tag-default tag-pill" key={tag}>
+                <span
+                  className="tag-default tag-pill"
+                  key={tag}
+                  onClick={() => removeTag(tag)}
+                >
                   <i className="ion-close-round"></i>
                   {tag}
                 </span>
@@ -99,6 +128,8 @@ const EditorForm = (props: EditorFormProps) => {
           <button
             className="btn btn-lg pull-xs-right btn-primary"
             type="submit"
+            disabled={loading}
+            onClick={handleSubmit}
           >
             Publish Article
           </button>

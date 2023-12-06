@@ -22,6 +22,10 @@ export const fetchWrapper = async <T = any>(
   if (resp.ok) {
     return data as T
   } else {
-    throw data.errors
+    throw {
+      status: resp.status,
+      statusText: resp.statusText,
+      errors: data.errors,
+    }
   }
 }

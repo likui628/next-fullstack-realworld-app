@@ -33,12 +33,10 @@ export class ApiResponse {
 function processErrorMessage(err: unknown): string[] {
   if (typeof err === 'string') {
     return [err]
-  }
-  if (Array.isArray(err)) {
+  } else if (Array.isArray(err)) {
     return err.map((e) => e.toString())
-  }
-  if (err instanceof ZodError) {
-    err.issues.map((issue) => issue.message)
+  } else if (err instanceof ZodError) {
+    return err.issues.map((issue) => issue.message)
   }
   return ['Something went wrong']
 }
