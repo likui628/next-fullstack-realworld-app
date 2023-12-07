@@ -1,9 +1,9 @@
 import { getArticle } from '@/app/actions/getArticle'
 import ArticleBanner from '@/components/article/ArticleBanner'
-import ArticleActions from '@/components/article/ArticleActions'
 import ArticleBody from '@/components/article/ArticleBody'
 import ArticleComments from '@/components/article/ArticleComments'
 import { Metadata } from 'next'
+import ArticleMeta from '@/components/article/ArticleMeta'
 
 interface ArticleProps {
   params: { slug: string }
@@ -36,7 +36,9 @@ const articlePage = async ({ params }: ArticleProps) => {
               ))}
             </ul>
             <br />
-            <ArticleActions />
+            <div className="article-actions">
+              <ArticleMeta article={data} />
+            </div>
             <ArticleComments slug={params.slug} />
           </div>
         </>

@@ -4,19 +4,19 @@ import { ArticleItem } from '@/types/server'
 import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
 
-interface FavoritesButtonProps {
-  article: any
+interface FavoriteButtonProps {
+  article: ArticleItem
   className?: string
   text?: string
   onChange?: (favorite: ArticleItem) => void
 }
 
-const FavoritesButton = ({
+const FavoriteButton = ({
   article,
   className,
   text,
   onChange,
-}: FavoritesButtonProps) => {
+}: FavoriteButtonProps) => {
   const { favorited, favoritesCount, slug } = article
   const [loading, setLoading] = useState(false)
 
@@ -42,7 +42,7 @@ const FavoritesButton = ({
     <button
       onClick={handleFavorites}
       disabled={loading}
-      className={`${className} ${
+      className={`${className || 'btn btn-sm'} ${
         favorited ? 'btn-primary' : 'btn-outline-primary'
       }`}
     >
@@ -57,4 +57,4 @@ const FavoritesButton = ({
     </button>
   )
 }
-export default FavoritesButton
+export default FavoriteButton

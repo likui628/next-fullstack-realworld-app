@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { formatTime } from '@/utils/format'
 import { ArticleItem } from '@/types/server'
-import FavoritesButton from '@/components/common/FavoritesButton'
+import FavoritesButton from '@/components/common/FavoriteButton'
 import { useState } from 'react'
 
 interface ArticlePreviewProps {
