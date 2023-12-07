@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { CurrentUser } from '@/types/server'
+import Image from 'next/image'
 
 interface HeaderProps {
   currentUser?: CurrentUser | null
@@ -36,7 +37,13 @@ const Header = ({ currentUser }: HeaderProps) => {
                   href={`/profile/@${currentUser.username}`}
                   className="nav-link"
                 >
-                  <img src={currentUser.image || ''} className="user-pic" />
+                  <Image
+                    src={currentUser.image || ''}
+                    alt={currentUser.username}
+                    width={26}
+                    height={26}
+                    className="user-pic"
+                  />
                   {currentUser.username}
                 </Link>
               </li>

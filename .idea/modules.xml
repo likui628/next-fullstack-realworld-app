@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/next-mongo-blog-app.iml" filepath="$PROJECT_DIR$/.idea/next-mongo-blog-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/next-realworld-fullstack.iml" filepath="$PROJECT_DIR$/.idea/next-realworld-fullstack.iml" />
     </modules>
   </component>
 </project>

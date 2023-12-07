@@ -1,8 +1,14 @@
 // https://www.prisma.io/docs/guides/database/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
 import { PrismaClient } from '@prisma/client'
+import { Prisma } from '.prisma/client'
 
 const prismaClientSingleton = () => {
-  return new PrismaClient()
+  let opt: Prisma.PrismaClientOptions = {}
+  if (process.env.NODE_ENV === 'development') {
+    opt['log'] = ['query', 'info', 'warn', 'error']
+  }
+
+  return new PrismaClient(opt)
 }
 
 type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>
