@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react'
 import { CommentItem, CommentsResp } from '@/types/server'
 import { fetchWrapper } from '@/utils/fetch'
 import { useAuth } from '@/components/common/AuthProvider'
+import Image from 'next/image'
 
 interface ArticleCommentsProps {
   slug: string
@@ -58,8 +59,8 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                 />
               </div>
               <div className="card-footer">
-                <img
-                  alt=""
+                <Image
+                  alt={currentUser.username}
                   src={currentUser.image || ''}
                   className="comment-author-img"
                 />
@@ -78,8 +79,8 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                     href={`/profile/${comment.author.username}`}
                     className="comment-author"
                   >
-                    <img
-                      alt=""
+                    <Image
+                      alt={comment.author.username}
                       src={comment.author.image}
                       className="comment-author-img"
                     />

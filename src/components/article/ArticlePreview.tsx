@@ -5,6 +5,7 @@ import { formatTime } from '@/utils/format'
 import { ArticleItem } from '@/types/server'
 import FavoritesButton from '@/components/common/FavoriteButton'
 import { useState } from 'react'
+import Image from 'next/image'
 
 interface ArticlePreviewProps {
   article: ArticleItem
@@ -21,7 +22,12 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
       <div className="article-preview">
         <div className="article-meta">
           <Link href={`/profile/${article.author.username}`}>
-            <img alt="" src={article.author?.image || ''} />
+            <Image
+              alt={article.author.username}
+              src={article.author?.image || ''}
+              width={26}
+              height={26}
+            />
           </Link>
           <div className="info">
             <Link
