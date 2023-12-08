@@ -18,33 +18,28 @@ export const POST = async (req: NextRequest) => {
   }
 
   const { title, description = '', body: articleBody, tagList } = result.data
-  const article = await prisma.article.create({
-    data: {
-      title,
-      slug: slug(title),
-      description,
-      body: articleBody,
-      authorId: currentUser.id,
-      tagList: {
-        create: tagList?.map((tag) => ({
-          tag: {
-            connectOrCreate: {
-              create: { name: tag },
-              where: { name: tag },
+  try {
+    const article = await prisma.article.create({
+      data: {
+        title,
+        slug: slug(title),
+        description,
+        body: articleBody,
+        authorId: currentUser.id,
+        tagList: {
+          create: tagList?.map((tag) => ({
+            tag: {
+              connectOrCreate: {
+                create: { name: tag },
+                where: { name: tag },
+              },
             },
-          },
-        })),
-      },
-    },
-    include: {
-      author: true,
-      tagList: {
-        select: {
-          tag: true,
+          })),
         },
       },
-    },
-  })
-
-  return ApiResponse.ok({ article })
+    })
+    return ApiResponse.ok({ article })
+  } catch (e: any) {
+    return ApiResponse.badRequest('Create article failed')
+  }
 }

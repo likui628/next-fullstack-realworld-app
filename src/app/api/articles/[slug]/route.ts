@@ -2,6 +2,8 @@ import { NextRequest } from 'next/server'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import { ApiResponse } from '@/app/api/response'
 import { prisma } from '@/libs/prisma'
+import { articleUpdateSchema } from '@/app/validation/schema'
+import slug from 'slug'
 
 interface IParams {
   slug: string
@@ -39,4 +41,67 @@ export const DELETE = async (
   }
 
   return ApiResponse.noContent()
+}
+
+export const PUT = async (
+  req: NextRequest,
+  { params }: { params: IParams },
+) => {
+  const currentUser = await getCurrentUser()
+  if (!currentUser) {
+    return ApiResponse.unauthorized()
+  }
+
+  const article = await prisma.article.findUnique({
+    where: { slug: params.slug },
+  })
+
+  if (!article) {
+    return ApiResponse.notFound("Article doesn't exists")
+  }
+
+  if (article.authorId !== currentUser.id) {
+    return ApiResponse.forbidden()
+  }
+
+  const body = await req.json()
+  const result = articleUpdateSchema.safeParse(body.article)
+  if (!result.success) {
+    return ApiResponse.badRequest(result.error)
+  }
+  const {
+    title,
+    description = '',
+    body: articleBody,
+    tagList = [],
+  } = result.data
+
+  try {
+    const updatedArticle = await prisma.article.update({
+      where: {
+        id: article.id,
+      },
+      data: {
+        title,
+        description,
+        body: articleBody,
+        slug: slug(title),
+        tagList: {
+          deleteMany: { articleId: article.id },
+          create: tagList?.map((tag) => ({
+            tag: {
+              connectOrCreate: {
+                create: { name: tag },
+                where: { name: tag },
+              },
+            },
+          })),
+        },
+      },
+    })
+
+    return ApiResponse.ok({ article: updatedArticle })
+  } catch (e) {
+    return ApiResponse.badRequest('Update article fail')
+  }
 }

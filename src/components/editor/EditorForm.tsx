@@ -14,7 +14,7 @@ interface EditorForm {
 }
 
 interface EditorFormProps {
-  article?: ArticleItem
+  article?: ArticleItem | null
 }
 
 const EditorForm = (props: EditorFormProps) => {
@@ -35,6 +35,7 @@ const EditorForm = (props: EditorFormProps) => {
 
   const addTag = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
+      e.preventDefault()
       setArticle({ ...article, tagList: [...article.tagList, tag] })
       setTag('')
     }
@@ -48,11 +49,13 @@ const EditorForm = (props: EditorFormProps) => {
   }
 
   const router = useRouter()
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try {
       setLoading(true)
-      const data = await fetchWrapper('/articles', 'POST', {
+      const isUpdate = !!article.slug
+      const apiUri = isUpdate ? `/articles/${article.slug}` : '/articles'
+      const data = await fetchWrapper(apiUri, isUpdate ? 'PUT' : 'POST', {
         article,
       })
       router.push(`/article/${data.article.slug}`)
@@ -70,7 +73,7 @@ const EditorForm = (props: EditorFormProps) => {
           <li key={index}>{err}</li>
         ))}
       </ul>
-      <form onSubmit={(e) => e.preventDefault()}>
+      <form onSubmit={handleSubmit}>
         <fieldset>
           <fieldset className="form-group">
             <input
@@ -129,7 +132,6 @@ const EditorForm = (props: EditorFormProps) => {
             className="btn btn-lg pull-xs-right btn-primary"
             type="submit"
             disabled={loading}
-            onClick={handleSubmit}
           >
             Publish Article
           </button>

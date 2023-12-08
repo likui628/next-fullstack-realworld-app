@@ -12,20 +12,24 @@ export const fetchWrapper = async <T = any>(
   body?: any,
   options?: RequestInit,
 ) => {
-  const resp = await fetch(`${BASE_URL}${url}`, {
-    ...basicOptions,
-    method,
-    ...options,
-    body: body && JSON.stringify(body),
-  })
-  const data = await resp.json()
-  if (resp.ok) {
-    return data as T
-  } else {
-    throw {
-      status: resp.status,
-      statusText: resp.statusText,
-      errors: data.errors,
+  try {
+    const resp = await fetch(`${BASE_URL}${url}`, {
+      ...basicOptions,
+      method,
+      ...options,
+      body: body && JSON.stringify(body),
+    })
+    const data = await resp.json()
+    if (resp.ok) {
+      return data as T
+    } else {
+      throw {
+        status: resp.status,
+        statusText: resp.statusText,
+        errors: data.errors,
+      }
     }
+  } catch (e: any) {
+    throw e.errors ? e : { errors: ['something went wrong'] }
   }
 }
