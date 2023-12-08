@@ -26,7 +26,7 @@ export class ApiResponse {
   }
 
   static noContent() {
-    return NextResponse.json(null, { status: 204 })
+    return NextResponse.json({}, { status: 200 })
   }
 }
 

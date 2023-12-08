@@ -63,6 +63,8 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                   alt={currentUser.username}
                   src={currentUser.image || ''}
                   className="comment-author-img"
+                  width={26}
+                  height={26}
                 />
                 <button className="btn btn-sm btn-primary" type="submit">
                   Post Comment
@@ -83,6 +85,8 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                       alt={comment.author.username}
                       src={comment.author.image}
                       className="comment-author-img"
+                      width={26}
+                      height={26}
                     />
                   </Link>
                   &nbsp;
