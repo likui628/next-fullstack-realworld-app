@@ -4,6 +4,7 @@ import ArticleBody from '@/components/article/ArticleBody'
 import ArticleComments from '@/components/article/ArticleComments'
 import { Metadata } from 'next'
 import ArticleMeta from '@/components/article/ArticleMeta'
+import { redirect } from 'next/navigation'
 
 interface ArticleProps {
   params: { slug: string }
@@ -19,6 +20,10 @@ export async function generateMetadata({
 
 const articlePage = async ({ params }: ArticleProps) => {
   const data = await getArticle({ slug: params.slug })
+  if (!data) {
+    redirect('/')
+  }
+
   return (
     <div className="article-page">
       {data && (

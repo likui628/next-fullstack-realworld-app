@@ -40,7 +40,7 @@ export async function getArticle(params: IArticleParams) {
     },
   })
   if (!data) {
-    throw new Error('Article not found')
+    return null
   }
 
   const following = data.author.followedBy.some(
