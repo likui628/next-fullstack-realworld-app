@@ -1,23 +1,36 @@
-const profilePage = () => {
+import getUserProfile from '@/app/actions/getUserProfile'
+import { redirect } from 'next/navigation'
+import Image from 'next/image'
+
+interface ProfilePageProps {
+  params: { username: string }
+}
+
+const profilePage = async ({ params }: ProfilePageProps) => {
+  const username = decodeURIComponent(params.username).replace(/@/, '')
+  const profile = await getUserProfile(username)
+  if (!profile) {
+    redirect('/')
+  }
+
   return (
     <div className="profile-page">
       <div className="user-info">
         <div className="container">
           <div className="row">
             <div className="col-xs-12 col-md-10 offset-md-1">
-              <img
-                alt=""
-                src="http://i.imgur.com/Qr71crq.jpg"
+              <Image
+                src={profile.image}
+                alt={profile.username}
+                width={100}
+                height={100}
                 className="user-img"
               />
-              <h4>Eric Simons</h4>
-              <p>
-                Cofounder @GoThinkster, lived in Aol's HQ for a few months,
-                kinda looks like Peeta from the Hunger Games
-              </p>
+              <h4>{profile.username}</h4>
+              <p>{profile.bio}</p>
               <button className="btn btn-sm btn-outline-secondary action-btn">
                 <i className="ion-plus-round"></i>
-                &nbsp; Follow Eric Simons
+                &nbsp; Follow {profile.username}
               </button>
             </div>
           </div>
