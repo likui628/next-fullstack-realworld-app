@@ -3,6 +3,9 @@ import { redirect } from 'next/navigation'
 import Image from 'next/image'
 import QueryLink from '@/components/common/QueryLink'
 import ProfileTab from '@/components/profile/ProfileTab'
+import getCurrentUser from '@/app/actions/getCurrentUser'
+import Link from 'next/link'
+import FollowButton from '@/components/common/FollowButton'
 
 interface ProfilePageProps {
   params: { username: string }
@@ -17,6 +20,8 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
   if (!profile) {
     redirect('/')
   }
+
+  const currentUser = await getCurrentUser()
 
   const tab = searchParams.tab || 'my'
 
@@ -35,10 +40,21 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
               />
               <h4>{profile.username}</h4>
               <p>{profile.bio}</p>
-              <button className="btn btn-sm btn-outline-secondary action-btn">
-                <i className="ion-plus-round"></i>
-                &nbsp; Follow {profile.username}
-              </button>
+              {currentUser?.username === profile.username ? (
+                <Link
+                  href={'/settings'}
+                  className="btn btn-sm btn-outline-secondary action-btn"
+                >
+                  <i className="ion-gear-a"></i>
+                  &nbsp;Edit Profile Settings
+                </Link>
+              ) : (
+                <FollowButton
+                  author={profile.username}
+                  following={false}
+                  className={'action-btn'}
+                />
+              )}
             </div>
           </div>
         </div>

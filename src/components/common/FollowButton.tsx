@@ -5,29 +5,29 @@ import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
 
 interface FollowButtonProps {
-  article: ArticleItem
+  author: string
+  following?: boolean
   className?: string
   onChange?: (favorite: ArticleItem) => void
 }
 
-const FollowButton = ({ article, className, onChange }: FollowButtonProps) => {
-  const author = article.author
-  const following = article.author.following
+const FollowButton = ({
+  author,
+  following,
+  className,
+  onChange,
+}: FollowButtonProps) => {
   const [loading, setLoading] = useState(false)
 
   const handleFavorites = async () => {
     setLoading(true)
     try {
-      const username = author.username
       const data = following
         ? await fetchWrapper<ArticleItem>(
-            `/profiles/${username}/follow`,
+            `/profiles/${author}/follow`,
             'DELETE',
           )
-        : await fetchWrapper<ArticleItem>(
-            `/profiles/${username}/follow`,
-            'POST',
-          )
+        : await fetchWrapper<ArticleItem>(`/profiles/${author}/follow`, 'POST')
 
       if (data) {
         onChange && onChange(data)
@@ -42,12 +42,12 @@ const FollowButton = ({ article, className, onChange }: FollowButtonProps) => {
       onClick={handleFavorites}
       disabled={loading}
       className={`${className || ''} btn btn-sm ${
-        author.following ? 'btn-secondary' : 'btn-outline-secondary'
+        following ? 'btn-secondary' : 'btn-outline-secondary'
       }`}
     >
       <i className="ion-plus-round"></i>
-      &nbsp; {article.author.following ? 'Unfollow' : 'Follow'}&nbsp;
-      {article.author.username}
+      &nbsp; {following ? 'Unfollow' : 'Follow'}&nbsp;
+      {author}
     </button>
   )
 }
