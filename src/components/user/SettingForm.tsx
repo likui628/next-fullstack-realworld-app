@@ -32,7 +32,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const data = await fetchWrapper('/user', 'PUT', { user: userInfo })
-    router.push(`/profile/@${encodeURIComponent(data.user.username)}`)
+    router.push(`/profile/@${data.user.username}`)
   }
 
   return (

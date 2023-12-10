@@ -21,7 +21,7 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
     <>
       <div className="article-preview">
         <div className="article-meta">
-          <Link href={`/profile/${article.author.username}`}>
+          <Link href={`/profile/@${article.author.username}`}>
             <Image
               alt={article.author.username}
               src={article.author?.image || ''}
@@ -31,7 +31,7 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
           </Link>
           <div className="info">
             <Link
-              href={`/profile/${article.author.username}`}
+              href={`/profile/@${article.author.username}`}
               className="author"
             >
               {article.author.username}

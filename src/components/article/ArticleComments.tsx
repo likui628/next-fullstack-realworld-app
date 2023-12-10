@@ -78,7 +78,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                 </div>
                 <div className="card-footer">
                   <Link
-                    href={`/profile/${comment.author.username}`}
+                    href={`/profile/@${comment.author.username}`}
                     className="comment-author"
                   >
                     <Image
@@ -91,7 +91,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                   </Link>
                   &nbsp;
                   <Link
-                    href={`/profile/${comment.author.username}`}
+                    href={`/profile/@${comment.author.username}`}
                     className="comment-author"
                   >
                     {comment.author.username}
