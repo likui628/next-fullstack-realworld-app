@@ -64,7 +64,11 @@ const ArticleMeta = ({ article }: ArticleMetaProps) => {
         </span>
       ) : (
         <span>
-          <FollowButton article={article} className={'mr-1'} />
+          <FollowButton
+            author={article.author.username}
+            following={article.author.following}
+            className={'mr-1'}
+          />
           <FavoriteButton
             article={article}
             text="Favorite Article"
