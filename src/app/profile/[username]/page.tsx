@@ -1,17 +1,24 @@
 import getUserProfile from '@/app/actions/getUserProfile'
 import { redirect } from 'next/navigation'
 import Image from 'next/image'
+import QueryLink from '@/components/common/QueryLink'
+import ProfileTab from '@/components/profile/ProfileTab'
 
 interface ProfilePageProps {
   params: { username: string }
+  searchParams: {
+    tab?: 'my' | 'favorited'
+  }
 }
 
-const profilePage = async ({ params }: ProfilePageProps) => {
+const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
   const username = decodeURIComponent(params.username).replace(/@/, '')
   const profile = await getUserProfile(username)
   if (!profile) {
     redirect('/')
   }
+
+  const tab = searchParams.tab || 'my'
 
   return (
     <div className="profile-page">
@@ -43,68 +50,28 @@ const profilePage = async ({ params }: ProfilePageProps) => {
             <div className="articles-toggle">
               <ul className="nav nav-pills outline-active">
                 <li className="nav-item">
-                  <a className="nav-link active" href="/">
+                  <QueryLink
+                    query={{ tab: 'my' }}
+                    className={
+                      tab !== 'favorited' ? 'nav-link active' : 'nav-link'
+                    }
+                  >
                     My Articles
-                  </a>
+                  </QueryLink>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/">
+                  <QueryLink
+                    query={{ tab: 'favorited' }}
+                    className={
+                      tab === 'favorited' ? 'nav-link active' : 'nav-link'
+                    }
+                  >
                     Favorited Articles
-                  </a>
+                  </QueryLink>
                 </li>
               </ul>
             </div>
-
-            <div className="article-preview">
-              <div className="article-meta">
-                <a href="/">
-                  <img alt="" src="http://i.imgur.com/Qr71crq.jpg" />
-                </a>
-                <div className="info">
-                  <a href="/" className="author">
-                    Eric Simons
-                  </a>
-                  <span className="date">January 20th</span>
-                </div>
-                <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                  <i className="ion-heart"></i> 29
-                </button>
-              </div>
-              <a href="/" className="preview-link">
-                <h1>How to build webapps that scale</h1>
-                <p>This is the description for the post.</p>
-                <span>Read more...</span>
-              </a>
-            </div>
-
-            <div className="article-preview">
-              <div className="article-meta">
-                <a href="/">
-                  <img alt="" src="http://i.imgur.com/N4VcUeJ.jpg" />
-                </a>
-                <div className="info">
-                  <a href="/" className="author">
-                    Albert Pai
-                  </a>
-                  <span className="date">January 20th</span>
-                </div>
-                <button className="btn btn-outline-primary btn-sm pull-xs-right">
-                  <i className="ion-heart"></i> 32
-                </button>
-              </div>
-              <a href="/" className="preview-link">
-                <h1>
-                  The song you won't ever stop singing. No matter how hard you
-                  try.
-                </h1>
-                <p>This is the description for the post.</p>
-                <span>Read more...</span>
-                <ul className="tag-list">
-                  <li className="tag-default tag-pill tag-outline">Music</li>
-                  <li className="tag-default tag-pill tag-outline">Song</li>
-                </ul>
-              </a>
-            </div>
+            <ProfileTab tab={tab} username={username} />
           </div>
         </div>
       </div>

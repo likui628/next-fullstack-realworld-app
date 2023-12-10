@@ -9,6 +9,8 @@ interface IArticlesParams {
   page?: number
   tag?: string
   feed?: string
+  author?: string
+  favorited?: string
 }
 
 export default async function getArticles(
@@ -39,6 +41,24 @@ export default async function getArticles(
         followedBy: {
           some: {
             followerId: userId,
+          },
+        },
+      },
+    }
+  }
+  if (params.author) {
+    query = {
+      author: {
+        username: params.author,
+      },
+    }
+  }
+  if (params.favorited) {
+    query = {
+      favoritedBy: {
+        some: {
+          favoritedBy: {
+            username: params.favorited,
           },
         },
       },
