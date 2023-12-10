@@ -21,9 +21,9 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
     redirect('/')
   }
 
-  const currentUser = await getCurrentUser()
-
+  const following = profile.following
   const tab = searchParams.tab || 'my'
+  const currentUser = await getCurrentUser()
 
   return (
     <div className="profile-page">
@@ -51,7 +51,7 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
               ) : (
                 <FollowButton
                   author={profile.username}
-                  following={false}
+                  following={following}
                   className={'action-btn'}
                 />
               )}
