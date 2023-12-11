@@ -1,18 +1,21 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
+import { getToken } from 'next-auth/jwt'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === '/') {
     return homeMiddleware(request)
   }
-  return NextResponse.next()
+  return authMiddleware(request)
 }
 
-function homeMiddleware(request: NextRequest) {
+async function homeMiddleware(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams
   const tag = searchParams.get('tag')
   const feed = searchParams.get('feed')
-  if (hasLogin(request)) {
+
+  const token = await getToken({ req: request })
+  if (!token) {
     if (!tag && !feed) {
       return NextResponse.redirect(new URL('/?feed=feed', request.url))
     }
@@ -24,13 +27,19 @@ function homeMiddleware(request: NextRequest) {
   return NextResponse.next()
 }
 
-function hasLogin(request: NextRequest) {
-  const sessionToken = request.cookies.get('next-auth.session-token')?.value
-  return !!sessionToken
-}
+const requireAuth = ['/profile', '/editor', '/settings']
 
-// Matching Paths
-// https://nextjs.org/docs/app/building-your-application/routing/middleware#matching-paths
-export const config = {
-  matcher: '/',
+async function authMiddleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname
+  if (requireAuth.some((path) => pathname.startsWith(path))) {
+    const token = await getToken({ req: request })
+    if (!token) {
+      const url = new URL(`/login`, request.url)
+      return NextResponse.redirect(url)
+    }
+  }
+  if (request.nextUrl.pathname === '/') {
+    return homeMiddleware(request)
+  }
+  return NextResponse.next()
 }
