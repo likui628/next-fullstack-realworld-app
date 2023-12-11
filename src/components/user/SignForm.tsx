@@ -2,32 +2,57 @@
 
 import ListErrors from '@/components/common/ListErrors'
 import React, { useState } from 'react'
-import { useFetch } from '@/hooks/useFetch'
 import { signIn } from 'next-auth/react'
+import { fetchWrapper } from '@/utils/fetch'
 
 interface SignFormProps {
   isRegister?: boolean
 }
 
-const SignForm = ({ isRegister }: SignFormProps) => {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+interface UserForm {
+  username: string
+  email: string
+  password: string
+}
 
-  const { loading, data, errors, request } = useFetch<{ user: any }>()
+const SignForm = ({ isRegister }: SignFormProps) => {
+  const [user, setUser] = useState<UserForm>({
+    username: '',
+    email: '',
+    password: '',
+  })
+
+  const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState<string[]>([])
+
+  const onFieldChange = (val: Partial<UserForm>) => {
+    setUser({ ...user, ...val })
+  }
+
+  const handleSignIn = async () => {
+    await signIn('credentials', {
+      email: user.email,
+      password: user.password,
+      callbackUrl: '/',
+    })
+  }
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     if (isRegister) {
-      const formData = { user: { username, email, password } }
-      await request('/users', 'POST', formData)
+      const formData = { user }
+      try {
+        setLoading(true)
+        await fetchWrapper('/users', 'POST', formData).then(handleSignIn)
+      } catch (e: any) {
+        setErrors(e.errors)
+      } finally {
+        setLoading(false)
+      }
+    } else {
+      await handleSignIn()
     }
-    await signIn('credentials', {
-      email,
-      password,
-      callbackUrl: '/',
-    })
   }
   return (
     <>
@@ -41,8 +66,8 @@ const SignForm = ({ isRegister }: SignFormProps) => {
               name="username"
               placeholder="Username"
               data-testid="input-username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={user.username}
+              onChange={(e) => onFieldChange({ username: e.target.value })}
               disabled={loading}
             />
           </fieldset>
@@ -54,8 +79,8 @@ const SignForm = ({ isRegister }: SignFormProps) => {
             name="email"
             placeholder="Email"
             data-testid="input-email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={user.email}
+            onChange={(e) => onFieldChange({ email: e.target.value })}
             disabled={loading}
           />
         </fieldset>
@@ -66,8 +91,8 @@ const SignForm = ({ isRegister }: SignFormProps) => {
             name="password"
             placeholder="Password"
             data-testid="input-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={user.password}
+            onChange={(e) => onFieldChange({ password: e.target.value })}
             disabled={loading}
           />
         </fieldset>
