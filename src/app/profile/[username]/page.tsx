@@ -11,6 +11,7 @@ interface ProfilePageProps {
   params: { username: string }
   searchParams: {
     tab?: 'my' | 'favorited'
+    page?: string
   }
 }
 
@@ -23,6 +24,7 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
 
   const following = profile.following
   const tab = searchParams.tab || 'my'
+  const page = Number(searchParams.page) || 1
   const currentUser = await getCurrentUser()
 
   return (
@@ -87,7 +89,7 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
                 </li>
               </ul>
             </div>
-            <ProfileTab tab={tab} username={username} />
+            <ProfileTab tab={tab} username={username} page={page} />
           </div>
         </div>
       </div>
