@@ -6,6 +6,7 @@ import ProfileTab from '@/components/profile/ProfileTab'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 import Link from 'next/link'
 import FollowButton from '@/components/common/FollowButton'
+import { Metadata } from 'next'
 
 interface ProfilePageProps {
   params: { username: string }
@@ -15,12 +16,26 @@ interface ProfilePageProps {
   }
 }
 
-const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
-  const username = decodeURIComponent(params.username).replace(/@/, '')
+async function getProfile(originUsername: string) {
+  const username = decodeURIComponent(originUsername).replace(/@/, '')
   const profile = await getUserProfile(username)
+  return profile
+}
+
+export async function generateMetadata({
+  params,
+}: ProfilePageProps): Promise<Metadata> {
+  const profile = await getProfile(params.username)
+  return profile ? { title: profile.username } : {}
+}
+
+const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
+  const profile = await getProfile(params.username)
   if (!profile) {
     redirect('/')
   }
+
+  const username = profile.username
 
   const following = profile.following
   const tab = searchParams.tab || 'my'
