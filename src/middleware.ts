@@ -3,10 +3,12 @@ import type { NextRequest } from 'next/server'
 import { getToken } from 'next-auth/jwt'
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === '/') {
-    return homeMiddleware(request)
+  const pathname = request.nextUrl.pathname
+  if (pathname === '/') {
+    return await homeMiddleware(request)
+  } else {
+    return await authMiddleware(request)
   }
-  return authMiddleware(request)
 }
 
 async function homeMiddleware(request: NextRequest) {
@@ -15,7 +17,7 @@ async function homeMiddleware(request: NextRequest) {
   const feed = searchParams.get('feed')
 
   const token = await getToken({ req: request })
-  if (!token) {
+  if (token) {
     if (!tag && !feed) {
       return NextResponse.redirect(new URL('/?feed=feed', request.url))
     }
@@ -37,9 +39,6 @@ async function authMiddleware(request: NextRequest) {
       const url = new URL(`/login`, request.url)
       return NextResponse.redirect(url)
     }
-  }
-  if (request.nextUrl.pathname === '/') {
-    return homeMiddleware(request)
   }
   return NextResponse.next()
 }
