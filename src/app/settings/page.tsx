@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import SignOutButton from '@/components/common/SignOutButton'
 import SettingForm from '@/components/user/SettingForm'
 

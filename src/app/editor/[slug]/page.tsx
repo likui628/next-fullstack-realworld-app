@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
-import { getArticle } from '@/app/actions/getArticle'
+import { getArticle } from '@/actions/getArticle'
 import EditorForm from '@/components/editor/EditorForm'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import { redirect } from 'next/navigation'
 
 export const metadata: Metadata = {

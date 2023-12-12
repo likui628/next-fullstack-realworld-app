@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import { ApiResponse } from '@/app/api/response'
 import { prisma } from '@/libs/prisma'
-import { articleUpdateSchema } from '@/app/validation/schema'
+import { articleUpdateSchema } from '@/validation/schema'
 import slug from 'slug'
 
 interface IParams {

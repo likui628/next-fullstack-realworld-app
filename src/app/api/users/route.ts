@@ -1,7 +1,7 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/libs/prisma'
 import { ApiResponse } from '@/app/api/response'
-import { userRegisterSchema } from '@/app/validation/schema'
+import { userRegisterSchema } from '@/validation/schema'
 import { userMapper } from '@/app/api/mapper'
 
 export const POST = async (req: NextRequest) => {

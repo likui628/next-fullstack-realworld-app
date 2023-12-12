@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server'
 import { prisma } from '@/libs/prisma'
 import { ApiResponse } from '@/app/api/response'
-import getCurrentUser from '@/app/actions/getCurrentUser'
-import { getArticle } from '@/app/actions/getArticle'
+import getCurrentUser from '@/actions/getCurrentUser'
+import { getArticle } from '@/actions/getArticle'
 
 interface IParams {
   slug: string

@@ -1,4 +1,4 @@
-import { getArticle } from '@/app/actions/getArticle'
+import { getArticle } from '@/actions/getArticle'
 import ArticleBanner from '@/components/article/ArticleBanner'
 import ArticleBody from '@/components/article/ArticleBody'
 import ArticleComments from '@/components/article/ArticleComments'

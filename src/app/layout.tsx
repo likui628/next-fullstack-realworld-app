@@ -2,7 +2,7 @@ import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
 import { ChildrenProps } from '@/types/props'
 import './global.css'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import { AuthProvider } from '@/components/common/AuthProvider'
 import { Metadata } from 'next'
 

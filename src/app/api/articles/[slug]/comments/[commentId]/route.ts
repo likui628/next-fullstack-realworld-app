@@ -1,6 +1,6 @@
 import { NextRequest } from 'next/server'
 import { ApiResponse } from '@/app/api/response'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import { prisma } from '@/libs/prisma'
 
 interface IParams {

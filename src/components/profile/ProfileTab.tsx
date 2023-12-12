@@ -1,4 +1,4 @@
-import getArticles from '@/app/actions/getArticles'
+import getArticles from '@/actions/getArticles'
 import ArticlePreview from '@/components/article/ArticlePreview'
 import Pagination from '@/components/article/Pagination'
 

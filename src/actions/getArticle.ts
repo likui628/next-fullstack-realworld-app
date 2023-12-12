@@ -1,5 +1,5 @@
 import { prisma } from '@/libs/prisma'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import { userMapper } from '@/app/api/mapper'
 
 interface IArticleParams {

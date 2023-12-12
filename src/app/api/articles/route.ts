@@ -2,8 +2,8 @@ import { NextRequest } from 'next/server'
 import { prisma } from '@/libs/prisma'
 import slug from 'slug'
 import { ApiResponse } from '@/app/api/response'
-import getCurrentUser from '@/app/actions/getCurrentUser'
-import { articleInputSchema } from '@/app/validation/schema'
+import getCurrentUser from '@/actions/getCurrentUser'
+import { articleInputSchema } from '@/validation/schema'
 
 export const POST = async (req: NextRequest) => {
   const currentUser = await getCurrentUser()

@@ -2,7 +2,7 @@
 
 import { prisma } from '@/libs/prisma'
 import { userMapper } from '@/app/api/mapper'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 
 export default async function getUserProfile(username: string) {
   const currentUser = await getCurrentUser()

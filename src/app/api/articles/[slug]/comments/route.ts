@@ -1,8 +1,8 @@
 import { NextRequest } from 'next/server'
 import { ApiResponse } from '@/app/api/response'
-import { getComments } from '@/app/actions/getComments'
+import { getComments } from '@/actions/getComments'
 import { prisma } from '@/libs/prisma'
-import getCurrentUser from '@/app/actions/getCurrentUser'
+import getCurrentUser from '@/actions/getCurrentUser'
 import { userMapper } from '@/app/api/mapper'
 
 interface IParams {
