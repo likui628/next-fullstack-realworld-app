@@ -1,7 +1,7 @@
 import PopularTags from '@/components/popular-tags/PopularTags'
 import ArticlePreview from '@/components/article/ArticlePreview'
 import getArticles from '@/actions/getArticles'
-import { ArticleItem } from '@/types/server'
+import { ArticleItem } from '@/types/response'
 import Pagination from '@/components/article/Pagination'
 import Link from 'next/link'
 import getCurrentUser from '@/actions/getCurrentUser'

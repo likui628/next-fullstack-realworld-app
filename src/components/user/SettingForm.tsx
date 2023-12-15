@@ -1,6 +1,6 @@
 'use client'
 
-import { CurrentUser } from '@/types/server'
+import { CurrentUser } from '@/types/response'
 import React, { useState } from 'react'
 import { fetchWrapper } from '@/utils/fetch'
 import { useRouter } from 'next/navigation'

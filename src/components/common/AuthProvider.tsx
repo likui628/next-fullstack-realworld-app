@@ -1,8 +1,7 @@
 'use client'
 
-import { createContext, useContext } from 'react'
-import { ChildrenProps } from '@/types/props'
-import { CurrentUser } from '@/types/server'
+import React, { createContext, useContext } from 'react'
+import { CurrentUser } from '@/types/response'
 
 interface AuthContext {
   currentUser: CurrentUser | null
@@ -14,8 +13,9 @@ const initialAuthContext: AuthContext = {
 
 export const AuthContext = createContext<AuthContext>(initialAuthContext)
 
-interface AuthProviderProps extends ChildrenProps {
+interface AuthProviderProps {
   currentUser: CurrentUser | null
+  children: React.ReactNode
 }
 
 export const AuthProvider = ({ currentUser, children }: AuthProviderProps) => {

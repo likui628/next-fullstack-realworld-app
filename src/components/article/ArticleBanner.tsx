@@ -1,4 +1,4 @@
-import { ArticleItem } from '@/types/server'
+import { ArticleItem } from '@/types/response'
 import ArticleMeta from '@/components/article/ArticleMeta'
 
 interface ArticleBannerProps {

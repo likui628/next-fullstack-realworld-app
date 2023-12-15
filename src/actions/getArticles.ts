@@ -1,5 +1,5 @@
 import { prisma } from '@/libs/prisma'
-import { ArticlesResp } from '@/types/server'
+import { ArticlesResp } from '@/types/response'
 import { ARTICLE_PAGE_LIMIT } from '@/utils/constants'
 import getCurrentUser from '@/actions/getCurrentUser'
 import { userMapper } from '@/app/api/mapper'

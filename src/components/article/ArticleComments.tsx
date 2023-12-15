@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { formatTime } from '@/utils/format'
 import React, { useEffect, useState } from 'react'
-import { CommentItem, CommentsResp } from '@/types/server'
+import { CommentItem, CommentsResp } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useAuth } from '@/components/common/AuthProvider'
 import Image from 'next/image'

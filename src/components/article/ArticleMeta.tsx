@@ -1,6 +1,6 @@
 'use client'
 
-import { ArticleItem } from '@/types/server'
+import { ArticleItem } from '@/types/response'
 import { useAuth } from '@/components/common/AuthProvider'
 import Link from 'next/link'
 import Image from 'next/image'

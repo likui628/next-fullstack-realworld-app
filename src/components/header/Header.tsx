@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CurrentUser } from '@/types/server'
+import { CurrentUser } from '@/types/response'
 import Image from 'next/image'
 
 interface HeaderProps {

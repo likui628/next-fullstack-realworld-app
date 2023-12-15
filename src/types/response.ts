@@ -1,9 +1,5 @@
 import { Article, User, Comment } from '.prisma/client'
 
-export interface TagsResp {
-  tags: string[]
-}
-
 export interface ArticleItem extends Omit<Article, 'createdAt' | 'updatedAt'> {
   tagList: string[]
   createdAt: string

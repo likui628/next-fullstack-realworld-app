@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { formatTime } from '@/utils/format'
-import { ArticleItem } from '@/types/server'
+import { ArticleItem } from '@/types/response'
 import FavoritesButton from '@/components/common/FavoriteButton'
 import { useState } from 'react'
 import Image from 'next/image'

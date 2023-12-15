@@ -1,10 +1,10 @@
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
-import { ChildrenProps } from '@/types/props'
 import './global.css'
 import getCurrentUser from '@/actions/getCurrentUser'
 import { AuthProvider } from '@/components/common/AuthProvider'
 import { Metadata } from 'next'
+import React from 'react'
 
 export const metadata: Metadata = {
   title: {
@@ -14,7 +14,11 @@ export const metadata: Metadata = {
   description: 'Powered by Next.js',
 }
 
-export default async function RootLayout({ children }: ChildrenProps) {
+interface RootLayoutProps {
+  children: React.ReactNode
+}
+
+export default async function RootLayout({ children }: RootLayoutProps) {
   const currentUser = await getCurrentUser()
   return (
     <html lang="en">

@@ -1,6 +1,6 @@
 'use client'
 
-import { ArticleItem } from '@/types/server'
+import { ArticleItem } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
 
