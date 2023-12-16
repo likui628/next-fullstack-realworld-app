@@ -6,6 +6,7 @@ import Pagination from '@/components/article/Pagination'
 import Link from 'next/link'
 import getCurrentUser from '@/actions/getCurrentUser'
 import QueryLink from '@/components/common/QueryLink'
+import clsx from 'clsx'
 
 interface HomeProps {
   searchParams: {
@@ -42,9 +43,10 @@ export default async function Home({ searchParams }: HomeProps) {
                     {user && (
                       <QueryLink
                         query={{ feed: 'feed' }}
-                        className={
-                          feed === 'feed' ? 'nav-link active' : 'nav-link'
-                        }
+                        className={clsx(
+                          'nav-link',
+                          feed === 'feed' && 'active',
+                        )}
                       >
                         Your Feed
                       </QueryLink>
@@ -53,9 +55,7 @@ export default async function Home({ searchParams }: HomeProps) {
                   <li className="nav-item">
                     <QueryLink
                       query={{ feed: 'global' }}
-                      className={
-                        feed !== 'feed' && !tag ? 'nav-link active' : 'nav-link'
-                      }
+                      className={clsx('nav-link', feed !== 'feed' && 'active')}
                     >
                       Global Feed
                     </QueryLink>

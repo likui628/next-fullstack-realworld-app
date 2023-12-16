@@ -7,6 +7,7 @@ import getCurrentUser from '@/actions/getCurrentUser'
 import Link from 'next/link'
 import FollowButton from '@/components/common/FollowButton'
 import { Metadata } from 'next'
+import clsx from 'clsx'
 
 interface ProfilePageProps {
   params: { username: string }
@@ -85,9 +86,10 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
                 <li className="nav-item">
                   <QueryLink
                     query={{ tab: 'my' }}
-                    className={
-                      tab !== 'favorited' ? 'nav-link active' : 'nav-link'
-                    }
+                    className={clsx(
+                      'nav-link',
+                      tab !== 'favorited' && 'active',
+                    )}
                   >
                     My Articles
                   </QueryLink>
@@ -95,9 +97,10 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
                 <li className="nav-item">
                   <QueryLink
                     query={{ tab: 'favorited' }}
-                    className={
-                      tab === 'favorited' ? 'nav-link active' : 'nav-link'
-                    }
+                    className={clsx(
+                      'nav-link',
+                      tab === 'favorited' && 'active',
+                    )}
                   >
                     Favorited Articles
                   </QueryLink>

@@ -3,6 +3,7 @@
 import { ArticleItem } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
+import clsx from 'clsx'
 
 interface FollowButtonProps {
   author: string
@@ -41,9 +42,11 @@ const FollowButton = ({
     <button
       onClick={handleFavorites}
       disabled={loading}
-      className={`${className || ''} btn btn-sm ${
-        following ? 'btn-secondary' : 'btn-outline-secondary'
-      }`}
+      className={clsx(
+        className || '',
+        'btn btn-sm',
+        following ? 'btn-secondary' : 'btn-outline-secondary',
+      )}
     >
       <i className="ion-plus-round"></i>
       &nbsp; {following ? 'Unfollow' : 'Follow'}&nbsp;

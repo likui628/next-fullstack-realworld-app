@@ -3,6 +3,7 @@
 import { ArticleItem } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
+import clsx from 'clsx'
 
 interface FavoriteButtonProps {
   article: ArticleItem
@@ -42,9 +43,10 @@ const FavoriteButton = ({
     <button
       onClick={handleFavorites}
       disabled={loading}
-      className={`${className || 'btn btn-sm'} ${
-        favorited ? 'btn-primary' : 'btn-outline-primary'
-      }`}
+      className={clsx(
+        className || 'btn btn-sm',
+        favorited ? 'btn-primary' : 'btn-outline-primary',
+      )}
     >
       <i className="ion-heart"></i>
       {text ? (
