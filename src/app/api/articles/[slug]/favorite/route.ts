@@ -3,9 +3,16 @@ import { prisma } from '@/libs/prisma'
 import { ApiResponse } from '@/app/api/response'
 import getCurrentUser from '@/actions/getCurrentUser'
 import { getArticle } from '@/actions/getArticle'
+import { revalidatePath } from 'next/cache'
 
 interface IParams {
   slug: string
+}
+
+function revalidate(slug: string) {
+  revalidatePath('/')
+  revalidatePath(`/profile/[username]`, 'page')
+  revalidatePath(`/article/${slug}`)
 }
 
 export const POST = async (
@@ -35,6 +42,7 @@ export const POST = async (
         favoritedBy: { connect: { id: userId } },
       },
     })
+    revalidate(params.slug)
   } catch (e) {
     console.log(e)
   }
@@ -72,6 +80,7 @@ export const DELETE = async (
         },
       },
     })
+    revalidate(params.slug)
   } catch (e) {
     console.log(e)
   }

@@ -99,7 +99,7 @@ export default async function getArticles(
         },
       },
     },
-    orderBy: { updatedAt: 'desc' },
+    orderBy: { createdAt: 'desc' },
   })
 
   return {
