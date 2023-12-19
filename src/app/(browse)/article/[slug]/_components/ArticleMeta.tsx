@@ -12,14 +12,15 @@ import { useArticle } from '@/components/article/ArticleProvider'
 
 const ArticleMeta = () => {
   const { article } = useArticle()
+  const { currentUser } = useAuth()
+  const router = useRouter()
+
   if (!article) {
     return null
   }
 
-  const { currentUser } = useAuth()
   const isAuthor = currentUser?.id === article.author.id
 
-  const router = useRouter()
   const handleDelete = async () => {
     if (!window.confirm('Are you sure you wish to delete the article?')) {
       return
