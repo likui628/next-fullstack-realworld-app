@@ -1,10 +1,13 @@
-import { getArticle } from '@/actions/getArticle'
-import ArticleBanner from '@/components/article/ArticleBanner'
-import ArticleBody from '@/components/article/ArticleBody'
-import ArticleComments from '@/components/article/ArticleComments'
+import React from 'react'
 import { Metadata } from 'next'
-import ArticleMeta from '@/components/article/ArticleMeta'
 import { redirect } from 'next/navigation'
+import { getArticle } from '@/actions/getArticle'
+import { ArticleProvider } from '@/components/article/ArticleProvider'
+
+import ArticleBanner from './_components/ArticleBanner'
+import ArticleMeta from './_components/ArticleMeta'
+import ArticleBody from './_components/ArticleBody'
+import ArticleComments from './_components/ArticleComments'
 
 interface ArticleProps {
   params: { slug: string }
@@ -19,35 +22,35 @@ export async function generateMetadata({
 }
 
 const articlePage = async ({ params }: ArticleProps) => {
-  const data = await getArticle({ slug: params.slug })
-  if (!data) {
+  const article = await getArticle({ slug: params.slug })
+  if (!article) {
     redirect('/')
   }
 
   return (
     <div className="article-page">
-      {data && (
-        <>
-          <ArticleBanner article={data} />
-          <div className="container page">
-            <div className="row article-content">
-              <ArticleBody body={data.body} />
-            </div>
-            <ul className="tag-list">
-              {data.tagList.map((tag) => (
-                <li key={tag} className="tag-default tag-pill tag-outline">
-                  {tag}
-                </li>
-              ))}
-            </ul>
-            <br />
-            <div className="article-actions">
-              <ArticleMeta article={data} />
-            </div>
-            <ArticleComments slug={params.slug} />
+      <ArticleProvider article={article}>
+        <ArticleBanner title={article.title}>
+          <ArticleMeta />
+        </ArticleBanner>
+        <div className="container page">
+          <div className="row article-content">
+            <ArticleBody body={article.body} />
           </div>
-        </>
-      )}
+          <ul className="tag-list">
+            {article.tagList.map((tag) => (
+              <li key={tag} className="tag-default tag-pill tag-outline">
+                {tag}
+              </li>
+            ))}
+          </ul>
+          <br />
+          <div className="article-actions">
+            <ArticleMeta />
+          </div>
+          <ArticleComments slug={article.slug} />
+        </div>
+      </ArticleProvider>
     </div>
   )
 }

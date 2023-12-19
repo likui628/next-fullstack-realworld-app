@@ -1,6 +1,5 @@
 'use client'
 
-import { ArticleItem } from '@/types/response'
 import { useAuth } from '@/components/common/AuthProvider'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,12 +8,14 @@ import FavoriteButton from '@/components/common/FavoriteButton'
 import FollowButton from '@/components/common/FollowButton'
 import { useRouter } from 'next/navigation'
 import { fetchWrapper } from '@/utils/fetch'
+import { useArticle } from '@/components/article/ArticleProvider'
 
-interface ArticleMetaProps {
-  article: ArticleItem
-}
+const ArticleMeta = () => {
+  const { article } = useArticle()
+  if (!article) {
+    return null
+  }
 
-const ArticleMeta = ({ article }: ArticleMetaProps) => {
   const { currentUser } = useAuth()
   const isAuthor = currentUser?.id === article.author.id
 
