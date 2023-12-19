@@ -3,9 +3,15 @@ import { prisma } from '@/libs/prisma'
 import { ApiResponse } from '@/app/api/response'
 import getCurrentUser from '@/actions/getCurrentUser'
 import { userMapper } from '@/app/api/mapper'
+import { revalidatePath } from 'next/cache'
 
 interface IParams {
   username: string
+}
+
+function revalidate() {
+  revalidatePath(`/article/[slug]`, 'page')
+  revalidatePath(`/profile/[username]`, 'page')
 }
 
 export const POST = async (
@@ -46,7 +52,7 @@ export const POST = async (
       },
     },
   })
-
+  revalidate()
   return ApiResponse.ok({ profile: userMapper(profile, true) })
 }
 
@@ -83,6 +89,6 @@ export const DELETE = async (
       },
     },
   })
-
+  revalidate()
   return ApiResponse.ok({ profile: userMapper(profile, false) })
 }
