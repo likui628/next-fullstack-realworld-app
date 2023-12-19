@@ -1,6 +1,6 @@
 'use client'
 
-import { ArticleItem } from '@/types/response'
+import { Profile, ProfileResp } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
 import clsx from 'clsx'
@@ -9,7 +9,7 @@ interface FollowButtonProps {
   author: string
   following?: boolean
   className?: string
-  onChange?: (favorite: ArticleItem) => void
+  onChange?: (profile: Profile) => void
 }
 
 const FollowButton = ({
@@ -24,14 +24,14 @@ const FollowButton = ({
     setLoading(true)
     try {
       const data = following
-        ? await fetchWrapper<ArticleItem>(
+        ? await fetchWrapper<ProfileResp>(
             `/profiles/${author}/follow`,
             'DELETE',
           )
-        : await fetchWrapper<ArticleItem>(`/profiles/${author}/follow`, 'POST')
+        : await fetchWrapper<ProfileResp>(`/profiles/${author}/follow`, 'POST')
 
       if (data) {
-        onChange && onChange(data)
+        onChange && onChange(data.profile)
       }
     } finally {
       setLoading(false)

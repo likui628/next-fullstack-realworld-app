@@ -1,13 +1,15 @@
 'use client'
 
-import React, { createContext, useContext } from 'react'
+import React, { createContext, useContext, useState } from 'react'
 import { ArticleItem } from '@/types/response'
 
 export type ArticleContextType = {
   article: ArticleItem | null
+  setArticle: (article: ArticleItem) => void
 }
 export const ArticleContext = createContext<ArticleContextType>({
   article: null,
+  setArticle: () => {},
 })
 
 interface ArticleProviderProps {
@@ -16,11 +18,12 @@ interface ArticleProviderProps {
 }
 
 export const ArticleProvider = ({
-  article,
+  article: originalArticle,
   children,
 }: ArticleProviderProps) => {
+  const [article, setArticle] = useState<ArticleItem | null>(originalArticle)
   return (
-    <ArticleContext.Provider value={{ article }}>
+    <ArticleContext.Provider value={{ article, setArticle }}>
       {children}
     </ArticleContext.Provider>
   )

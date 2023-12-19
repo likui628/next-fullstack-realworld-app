@@ -9,7 +9,7 @@ interface FavoriteButtonProps {
   article: ArticleItem
   className?: string
   text?: string
-  onChange?: (favorite: ArticleItem) => void
+  onChange?: (articleItem: ArticleItem) => void
 }
 
 const FavoriteButton = ({
