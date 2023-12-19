@@ -32,7 +32,7 @@ export const POST = async (
     return ApiResponse.notFound('User not exists')
   }
 
-  const profile = await prisma.user.update({
+  await prisma.user.update({
     where: {
       id: currentUser.id,
     },
@@ -53,7 +53,7 @@ export const POST = async (
     },
   })
   revalidate()
-  return ApiResponse.ok({ profile: userMapper(profile, true) })
+  return ApiResponse.ok({ profile: userMapper(followUser, true) })
 }
 
 export const DELETE = async (
@@ -74,7 +74,7 @@ export const DELETE = async (
     return ApiResponse.notFound('User not exists')
   }
 
-  const profile = await prisma.user.update({
+  await prisma.user.update({
     where: {
       id: currentUser.id,
     },
@@ -89,6 +89,7 @@ export const DELETE = async (
       },
     },
   })
+
   revalidate()
-  return ApiResponse.ok({ profile: userMapper(profile, false) })
+  return ApiResponse.ok({ profile: userMapper(followUser, false) })
 }
