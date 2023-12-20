@@ -3,10 +3,8 @@ import ArticlePreview from '@/components/article/ArticlePreview'
 import getArticles from '@/actions/getArticles'
 import { ArticleItem } from '@/types/response'
 import Pagination from '@/components/article/Pagination'
-import Link from 'next/link'
+import FeedToggle from './_components/FeedToggle'
 import getCurrentUser from '@/actions/getCurrentUser'
-import QueryLink from '@/components/common/QueryLink'
-import clsx from 'clsx'
 
 interface HomeProps {
   searchParams: {
@@ -37,41 +35,7 @@ export default async function Home({ searchParams }: HomeProps) {
         <div className="container page">
           <div className="row">
             <div className="col-md-9">
-              <div className="feed-toggle">
-                <ul className="nav nav-pills outline-active">
-                  <li className="nav-item">
-                    {user && (
-                      <QueryLink
-                        query={{ feed: 'feed' }}
-                        className={clsx(
-                          'nav-link',
-                          feed === 'feed' && 'active',
-                        )}
-                      >
-                        Your Feed
-                      </QueryLink>
-                    )}
-                  </li>
-                  <li className="nav-item">
-                    <QueryLink
-                      query={{ feed: 'global' }}
-                      className={clsx('nav-link', feed !== 'feed' && 'active')}
-                    >
-                      Global Feed
-                    </QueryLink>
-                  </li>
-                  <li className="nav-item">
-                    {tag && (
-                      <Link
-                        href={{ pathname: '/', query: { tag } }}
-                        className="nav-link active"
-                      >
-                        # {tag}
-                      </Link>
-                    )}
-                  </li>
-                </ul>
-              </div>
+              <FeedToggle user={user} tag={tag} feed={feed} />
               {data.articles.length === 0 ? (
                 <div className="article-preview">
                   No articles are here... yet.
