@@ -1,10 +1,13 @@
+version: '3.8'
+
+name: next-realworld-dev
 services:
   postgresql:
-    container_name: postgre
+    container_name: postgres
     image: postgres:13.13
     restart: always
     ports:
-      - 5432:5432
+      - "5432:5432"
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
@@ -15,10 +18,11 @@ services:
       - default
 
   realworld:
+    container_name: realworld-dev
     image: realworld-dev
     build: .
     ports:
-      - 3000:3000
+      - "3000:3000"
     depends_on:
       - postgresql
     volumes:
