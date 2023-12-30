@@ -2,6 +2,8 @@ import { Metadata, NextPage } from 'next'
 import Link from 'next/link'
 import SignForm from '@/components/user/SignForm'
 
+export const dynamic = 'force-dynamic'
+
 export const metadata: Metadata = {
   title: 'Login',
 }
