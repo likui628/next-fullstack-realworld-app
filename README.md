@@ -9,17 +9,27 @@ at [https://next-fullstack-realworld-app.vercel.app/](https://next-fullstack-rea
 
 ![RealWorld Example App](screenshot.png)
 
-## Getting started
+## Development
 
-```shell script
-npm install
+First, run the development server:
 
-# Development
-npm run dev
-
-# Build dist
-npm run build
 ```
+docker-compose up --build --force-recreate
+```
+
+Open http://localhost:3000 with your browser to see the result.
+
+## Production
+
+```
+# Build prod
+docker compose -f docker-compose.production.yml build
+
+# Up prod in detached mode
+docker compose -f docker-compose.production.yml up -d
+```
+
+Open http://localhost:3000.
 
 ## Key Features
 
