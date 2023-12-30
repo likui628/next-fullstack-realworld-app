@@ -1,0 +1,29 @@
+version: '3.8'
+name: next-realworld-prod
+services:
+  postgresql:
+    container_name: postgres
+    image: postgres:13.13
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - /postgres-data:/var/lib/postgresql/data
+    networks:
+      - default
+
+  realworld:
+    image: realworld-prod
+    build:
+      dockerfile: Dockerfile.production
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgresql
+    networks:
+      - default
+
