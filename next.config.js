@@ -2,7 +2,12 @@
 const nextConfig = {
   output: 'standalone',
   images: {
-    domains: ['api.realworld.io'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'api.realworld.io',
+      },
+    ],
   },
 }
 
