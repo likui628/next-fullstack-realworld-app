@@ -18,11 +18,23 @@ export const POST = async (req: NextRequest) => {
   }
 
   const { title, description = '', body: articleBody, tagList } = result.data
+
+  const isSlugExist = async (slug: string) => {
+    return !!(await prisma.article.findFirst({ where: { slug } }))
+  }
+
+  let slugTitle = slug(title)
+  let counter = 1
+  while (await isSlugExist(slugTitle)) {
+    slugTitle = `${slugTitle}-${counter}`
+    counter++
+  }
+
   try {
     const article = await prisma.article.create({
       data: {
         title,
-        slug: slug(title),
+        slug: slugTitle,
         description,
         body: articleBody,
         authorId: currentUser.id,

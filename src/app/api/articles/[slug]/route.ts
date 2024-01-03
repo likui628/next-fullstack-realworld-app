@@ -85,7 +85,7 @@ export const PUT = async (
         title,
         description,
         body: articleBody,
-        slug: slug(title),
+        slug: article.slug,
         tagList: {
           deleteMany: { articleId: article.id },
           create: tagList?.map((tag) => ({
