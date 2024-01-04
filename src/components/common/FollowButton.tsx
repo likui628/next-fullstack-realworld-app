@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { useFollow } from '@/components/common/FollowProvider'
 import { useState } from 'react'
 import { useAuth } from '@/components/common/AuthProvider'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface FollowButtonProps {
   author: string
@@ -19,10 +19,11 @@ const FollowButton = ({ author, className }: FollowButtonProps) => {
 
   const { currentUser } = useAuth()
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleFavorites = async () => {
     if (!currentUser) {
-      router.push('/login')
+      router.push(`/login?callback=${pathname}`)
     }
 
     setLoading(true)

@@ -37,7 +37,7 @@ async function authMiddleware(request: NextRequest) {
     const token = await getToken({ req: request })
     if (!token) {
       const url = new URL(`/login`, request.url)
-      return NextResponse.redirect(url)
+      return NextResponse.redirect(`${url}?callback=${pathname}`)
     }
   }
   return NextResponse.next()

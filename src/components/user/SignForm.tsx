@@ -4,6 +4,7 @@ import ListErrors from '@/components/common/ListErrors'
 import React, { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { fetchWrapper } from '@/utils/fetch'
+import { useSearchParams } from 'next/navigation'
 
 interface SignFormProps {
   isRegister?: boolean
@@ -29,11 +30,13 @@ const SignForm = ({ isRegister }: SignFormProps) => {
     setUser({ ...user, ...val })
   }
 
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callback')
   const handleSignIn = async () => {
     await signIn('credentials', {
       email: user.email,
       password: user.password,
-      callbackUrl: '/',
+      callbackUrl: callbackUrl ? callbackUrl : '/',
     })
   }
 

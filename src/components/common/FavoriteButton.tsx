@@ -6,7 +6,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import { useArticle } from '@/components/article/ArticleProvider'
 import { useAuth } from '@/components/common/AuthProvider'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 
 interface FavoriteButtonProps {
   className?: string
@@ -20,10 +20,11 @@ const FavoriteButton = ({ className, text }: FavoriteButtonProps) => {
 
   const { currentUser } = useAuth()
   const router = useRouter()
+  const pathname = usePathname()
 
   const handleFavorites = async () => {
     if (!currentUser) {
-      router.push('/login')
+      router.push(`/login?callback=${pathname}`)
     }
 
     setLoading(true)
