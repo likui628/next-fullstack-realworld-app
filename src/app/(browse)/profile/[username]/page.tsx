@@ -30,7 +30,7 @@ export async function generateMetadata({
   return profile ? { title: profile.username } : {}
 }
 
-const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
+const ProfilePage = async ({ params, searchParams }: ProfilePageProps) => {
   const profile = await getProfile(params.username)
   if (!profile) {
     redirect('/')
@@ -114,4 +114,4 @@ const profilePage = async ({ params, searchParams }: ProfilePageProps) => {
     </div>
   )
 }
-export default profilePage
+export default ProfilePage

@@ -32,7 +32,7 @@ const ArticleMeta = () => {
 
   return (
     <div className="article-meta">
-      <Link href={`/@${article.author.username}`}>
+      <Link href={`/profile/@${article.author.username}`}>
         <Image
           src={article.author.image || ''}
           alt={article.author.username}
@@ -42,7 +42,7 @@ const ArticleMeta = () => {
         />
       </Link>
       <div className="info">
-        <Link href={`/@${article.author.username}`} className="author">
+        <Link href={`/profile/@${article.author.username}`} className="author">
           {article.author.username}
         </Link>
         <span className="date">{formatTime(article.updatedAt)}</span>
