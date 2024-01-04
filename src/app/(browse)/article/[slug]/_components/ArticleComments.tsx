@@ -35,12 +35,14 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    fetchWrapper(`/articles/${slug}/comments`, 'POST', { comment }).then(
-      (res) => {
-        setComments([res.comment, ...comments])
-        setComment('')
-      },
-    )
+    if (comment) {
+      fetchWrapper(`/articles/${slug}/comments`, 'POST', { comment }).then(
+        (res) => {
+          setComments([res.comment, ...comments])
+          setComment('')
+        },
+      )
+    }
   }
 
   return (

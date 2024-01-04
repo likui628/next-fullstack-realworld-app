@@ -19,11 +19,15 @@ export async function PUT(req: NextRequest) {
     data['password'] = hashPassword
   }
 
-  const user = await prisma.user.update({
-    where: {
-      id: body.user.id as string,
-    },
-    data,
-  })
-  return ApiResponse.ok({ user: userMapper(user) })
+  try {
+    const user = await prisma.user.update({
+      where: {
+        id: body.user.id as string,
+      },
+      data,
+    })
+    return ApiResponse.ok({ user: userMapper(user) })
+  } catch (e) {
+    return ApiResponse.badRequest('Update user fail')
+  }
 }

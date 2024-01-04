@@ -30,6 +30,6 @@ export const fetchWrapper = async <T = any>(
       }
     }
   } catch (e: any) {
-    throw e.errors ? e : { errors: ['something went wrong'] }
+    throw e.errors ? e : { errors: ['Something went wrong'] }
   }
 }

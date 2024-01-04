@@ -22,3 +22,7 @@ export const articleUpdateSchema = articleInputSchema.merge(
     slug: z.string({ required_error: 'Slug is required' }),
   }),
 )
+
+export const commentSchema = z.object({
+  comment: z.string().min(1, 'Body is required').max(65535, 'Body is too long'),
+})

@@ -23,7 +23,7 @@ export const DELETE = async (
   })
 
   if (!article) {
-    return ApiResponse.notFound("Article doesn't exists")
+    return ApiResponse.notFound("Article doesn't exist")
   }
 
   if (article.authorId !== currentUser.id) {
@@ -57,7 +57,7 @@ export const PUT = async (
   })
 
   if (!article) {
-    return ApiResponse.notFound("Article doesn't exists")
+    return ApiResponse.notFound("Article doesn't exist")
   }
 
   if (article.authorId !== currentUser.id) {
