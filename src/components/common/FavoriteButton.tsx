@@ -5,6 +5,8 @@ import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
 import clsx from 'clsx'
 import { useArticle } from '@/components/article/ArticleProvider'
+import { useAuth } from '@/components/common/AuthProvider'
+import { useRouter } from 'next/navigation'
 
 interface FavoriteButtonProps {
   className?: string
@@ -16,7 +18,14 @@ const FavoriteButton = ({ className, text }: FavoriteButtonProps) => {
   const { favorited, favoritesCount, slug } = { ...article }
   const [loading, setLoading] = useState(false)
 
+  const { currentUser } = useAuth()
+  const router = useRouter()
+
   const handleFavorites = async () => {
+    if (!currentUser) {
+      router.push('/login')
+    }
+
     setLoading(true)
     try {
       const data = favorited

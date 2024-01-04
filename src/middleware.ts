@@ -29,7 +29,7 @@ async function homeMiddleware(request: NextRequest) {
   return NextResponse.next()
 }
 
-const requireAuth = ['/profile', '/editor', '/settings']
+const requireAuth = ['/editor', '/settings']
 
 async function authMiddleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
