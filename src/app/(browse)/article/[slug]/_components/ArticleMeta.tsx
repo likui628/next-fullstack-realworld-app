@@ -11,7 +11,7 @@ import { fetchWrapper } from '@/utils/fetch'
 import { useArticle } from '@/components/article/ArticleProvider'
 
 const ArticleMeta = () => {
-  const { article, setArticle } = useArticle()
+  const { article } = useArticle()
   const { currentUser } = useAuth()
   const router = useRouter()
 
@@ -66,18 +66,8 @@ const ArticleMeta = () => {
         </span>
       ) : (
         <span>
-          <FollowButton
-            author={article.author.username}
-            following={article.author.following}
-            className={'mr-1'}
-            onChange={(profile) => setArticle({ ...article, author: profile })}
-          />
-          <FavoriteButton
-            article={article}
-            text="Favorite Article"
-            className="btn btn-sm"
-            onChange={setArticle}
-          />
+          <FollowButton author={article.author.username} className={'mr-1'} />
+          <FavoriteButton text="Favorite Article" className="btn btn-sm" />
         </span>
       )}
     </div>

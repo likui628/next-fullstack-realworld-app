@@ -4,21 +4,16 @@ import { ArticleItem } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useState } from 'react'
 import clsx from 'clsx'
+import { useArticle } from '@/components/article/ArticleProvider'
 
 interface FavoriteButtonProps {
-  article: ArticleItem
   className?: string
   text?: string
-  onChange?: (articleItem: ArticleItem) => void
 }
 
-const FavoriteButton = ({
-  article,
-  className,
-  text,
-  onChange,
-}: FavoriteButtonProps) => {
-  const { favorited, favoritesCount, slug } = article
+const FavoriteButton = ({ className, text }: FavoriteButtonProps) => {
+  const { article, setArticle } = useArticle()
+  const { favorited, favoritesCount, slug } = { ...article }
   const [loading, setLoading] = useState(false)
 
   const handleFavorites = async () => {
@@ -32,7 +27,7 @@ const FavoriteButton = ({
         : await fetchWrapper<ArticleItem>(`/articles/${slug}/favorite`, 'POST')
 
       if (data) {
-        onChange && onChange(data)
+        setArticle(data)
       }
     } finally {
       setLoading(false)

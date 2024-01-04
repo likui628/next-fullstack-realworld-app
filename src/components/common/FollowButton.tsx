@@ -1,24 +1,19 @@
 'use client'
 
-import { Profile, ProfileResp } from '@/types/response'
+import { ProfileResp } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
-import { useState } from 'react'
 import clsx from 'clsx'
+import { useFollow } from '@/components/common/FollowProvider'
+import { useState } from 'react'
 
 interface FollowButtonProps {
   author: string
-  following?: boolean
   className?: string
-  onChange?: (profile: Profile) => void
 }
 
-const FollowButton = ({
-  author,
-  following,
-  className,
-  onChange,
-}: FollowButtonProps) => {
+const FollowButton = ({ author, className }: FollowButtonProps) => {
   const [loading, setLoading] = useState(false)
+  const { following, setFollowing } = useFollow()
 
   const handleFavorites = async () => {
     setLoading(true)
@@ -31,7 +26,7 @@ const FollowButton = ({
         : await fetchWrapper<ProfileResp>(`/profiles/${author}/follow`, 'POST')
 
       if (data) {
-        onChange && onChange(data.profile)
+        setFollowing(data.profile.following)
       }
     } finally {
       setLoading(false)

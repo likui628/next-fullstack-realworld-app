@@ -4,21 +4,16 @@ import Link from 'next/link'
 import { formatTime } from '@/utils/format'
 import { ArticleItem } from '@/types/response'
 import FavoritesButton from '@/components/common/FavoriteButton'
-import { useState } from 'react'
 import Image from 'next/image'
+import { ArticleProvider } from '@/components/article/ArticleProvider'
 
 interface ArticlePreviewProps {
   article: ArticleItem
 }
 
-const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
-  const [article, setArticle] = useState(articleInit)
-
-  const handleFavorite = (newArticle: ArticleItem) => {
-    setArticle({ ...newArticle })
-  }
+const ArticlePreview = ({ article }: ArticlePreviewProps) => {
   return (
-    <>
+    <ArticleProvider article={article}>
       <div className="article-preview">
         <div className="article-meta">
           <Link href={`/profile/@${article.author.username}`}>
@@ -38,11 +33,7 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
             </Link>
             <span className="date">{formatTime(article.updatedAt)}</span>
           </div>
-          <FavoritesButton
-            article={article}
-            onChange={handleFavorite}
-            className="btn btn-sm pull-xs-right"
-          />
+          <FavoritesButton className="btn btn-sm pull-xs-right" />
         </div>
         <Link href={`/article/${article.slug}`} className="preview-link">
           <h1>{article.title}</h1>
@@ -59,7 +50,7 @@ const ArticlePreview = ({ article: articleInit }: ArticlePreviewProps) => {
           </ul>
         </Link>
       </div>
-    </>
+    </ArticleProvider>
   )
 }
 
