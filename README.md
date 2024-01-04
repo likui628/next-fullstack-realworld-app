@@ -34,12 +34,13 @@ Open http://localhost:3000.
 ## Key Features
 
 1. Authentication via Next-Auth
-2. login/register
-3. articles: create, edit, delete
-4. filter articles by tag, author, favorited
-5. comments on articles
-6. favorite articles
-7. follow other users
+2. Login/ Register
+3. Articles: Create, Edit, Delete
+4. Filter articles by tag, author, favorited
+5. Comments on articles
+6. Favorite articles
+7. Follow other users
+8. i18n: English, Chinese Simplified
 
 ## References
 
