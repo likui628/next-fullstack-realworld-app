@@ -5,7 +5,7 @@ import { Prisma } from '.prisma/client'
 const prismaClientSingleton = () => {
   let opt: Prisma.PrismaClientOptions = {}
   if (process.env.NODE_ENV === 'development') {
-    opt['log'] = ['query', 'info', 'warn', 'error']
+    // opt['log'] = ['query', 'info', 'warn', 'error']
   }
 
   return new PrismaClient(opt)

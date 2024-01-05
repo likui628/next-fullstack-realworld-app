@@ -1,10 +1,11 @@
 import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
-import './global.css'
+import '../../global.css'
 import getCurrentUser from '@/actions/getCurrentUser'
 import { AuthProvider } from '@/components/common/AuthProvider'
 import { Metadata } from 'next'
 import React from 'react'
+import { NextIntlClientProvider, useMessages } from 'next-intl'
 
 export const metadata: Metadata = {
   title: {
@@ -16,19 +17,34 @@ export const metadata: Metadata = {
 
 interface RootLayoutProps {
   children: React.ReactNode
+  params: { locale: string }
+  messages: Record<string, string>
 }
 
-export default async function RootLayout({ children }: RootLayoutProps) {
+async function RootLayout({
+  children,
+  params: { locale },
+  messages,
+}: RootLayoutProps) {
   const currentUser = await getCurrentUser()
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
-        <AuthProvider currentUser={currentUser}>
-          <Header currentUser={currentUser} />
-          {children}
-          <Footer />
-        </AuthProvider>
+        <NextIntlClientProvider locale={locale} messages={messages}>
+          <AuthProvider currentUser={currentUser}>
+            <Header currentUser={currentUser} />
+            {children}
+            <Footer />
+          </AuthProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   )
 }
+
+RootLayout.getInitialProps = async () => {
+  const messages = useMessages()
+  return { messages }
+}
+
+export default RootLayout
