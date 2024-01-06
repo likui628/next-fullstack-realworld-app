@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import { formatTime } from '@/utils/format'
 import React, { useEffect, useState } from 'react'
 import { CommentItem, CommentsResp } from '@/types/response'

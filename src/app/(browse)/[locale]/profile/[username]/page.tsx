@@ -1,10 +1,10 @@
 import getUserProfile from '@/actions/getUserProfile'
-import { redirect } from 'next/navigation'
+import { redirect, Link } from '@/navigation'
 import Image from 'next/image'
 import QueryLink from '@/components/common/QueryLink'
 import ProfileTab from '@/components/profile/ProfileTab'
 import getCurrentUser from '@/actions/getCurrentUser'
-import Link from 'next/link'
+
 import FollowButton from '@/components/common/FollowButton'
 import { Metadata } from 'next'
 import clsx from 'clsx'

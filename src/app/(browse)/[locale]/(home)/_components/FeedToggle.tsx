@@ -2,7 +2,7 @@
 
 import QueryLink from '@/components/common/QueryLink'
 import clsx from 'clsx'
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import { CurrentUser } from '@/types/response'
 
 interface FeedToggleProps {

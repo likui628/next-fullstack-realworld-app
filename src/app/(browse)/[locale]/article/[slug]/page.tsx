@@ -1,6 +1,6 @@
 import React from 'react'
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { redirect } from '@/navigation'
 import { getArticle } from '@/actions/getArticle'
 import { ArticleProvider } from '@/components/article/ArticleProvider'
 

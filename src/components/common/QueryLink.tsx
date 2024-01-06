@@ -1,14 +1,17 @@
 'use client'
 
-import Link, { LinkProps } from 'next/link'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { LinkProps } from 'next/link'
+import { Link, usePathname } from '@/navigation'
+
+import { useSearchParams } from 'next/navigation'
 import React from 'react'
 
-interface QueryLinkProps extends Omit<LinkProps, 'href'> {
+interface QueryLinkProps extends Omit<LinkProps, 'href' | 'locale'> {
   query: Record<string, string | number | undefined>
   children: React.ReactNode
   className: string
   reserved?: boolean
+  locale?: string
 }
 
 const QueryLink = ({

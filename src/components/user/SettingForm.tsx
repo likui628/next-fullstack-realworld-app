@@ -3,7 +3,7 @@
 import { CurrentUser } from '@/types/response'
 import React, { useState } from 'react'
 import { fetchWrapper } from '@/utils/fetch'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/navigation'
 import ListErrors from '@/components/common/ListErrors'
 
 interface SettingFormProps {

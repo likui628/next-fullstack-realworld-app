@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { useFollow } from '@/components/common/FollowProvider'
 import { useState } from 'react'
 import { useAuth } from '@/components/common/AuthProvider'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter } from '@/navigation'
 
 interface FollowButtonProps {
   author: string

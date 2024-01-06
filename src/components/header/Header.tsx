@@ -1,4 +1,4 @@
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import { CurrentUser } from '@/types/response'
 import Image from 'next/image'
 

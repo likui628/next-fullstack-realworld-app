@@ -1,5 +1,5 @@
 import { Metadata, NextPage } from 'next'
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import SignForm from '@/components/user/SignForm'
 
 export const dynamic = 'force-dynamic'

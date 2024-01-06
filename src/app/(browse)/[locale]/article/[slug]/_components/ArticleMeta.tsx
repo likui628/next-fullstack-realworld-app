@@ -1,12 +1,11 @@
 'use client'
 
 import { useAuth } from '@/components/common/AuthProvider'
-import Link from 'next/link'
 import Image from 'next/image'
 import { formatTime } from '@/utils/format'
 import FavoriteButton from '@/components/common/FavoriteButton'
 import FollowButton from '@/components/common/FollowButton'
-import { useRouter } from 'next/navigation'
+import { useRouter, Link } from '@/navigation'
 import { fetchWrapper } from '@/utils/fetch'
 import { useArticle } from '@/components/article/ArticleProvider'
 

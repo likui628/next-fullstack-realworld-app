@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { ArticleItem } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/navigation'
 
 interface EditorForm {
   slug?: string

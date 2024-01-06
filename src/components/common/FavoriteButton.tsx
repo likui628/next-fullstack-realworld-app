@@ -6,7 +6,7 @@ import { useState } from 'react'
 import clsx from 'clsx'
 import { useArticle } from '@/components/article/ArticleProvider'
 import { useAuth } from '@/components/common/AuthProvider'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter } from '@/navigation'
 
 interface FavoriteButtonProps {
   className?: string

@@ -1,6 +1,6 @@
 'use client'
 
-import Link from 'next/link'
+import { Link } from '@/navigation'
 import { formatTime } from '@/utils/format'
 import { ArticleItem } from '@/types/response'
 import FavoritesButton from '@/components/common/FavoriteButton'
