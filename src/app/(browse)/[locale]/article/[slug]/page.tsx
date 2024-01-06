@@ -25,7 +25,7 @@ export async function generateMetadata({
 const articlePage = async ({ params }: ArticleProps) => {
   const article = await getArticle({ slug: params.slug })
   if (!article) {
-    redirect('/')
+    return redirect('/')
   }
 
   return (
