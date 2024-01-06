@@ -1,9 +1,13 @@
 import { Metadata } from 'next'
 import React from 'react'
-import IntlLayout from '@/components/layouts/IntlLayout'
-import AuthLayout from '@/components/layouts/AuthLayout'
 
 import '@/app/global.css'
+
+import getCurrentUser from '@/actions/getCurrentUser'
+import Header from '@/components/header/Header'
+import Footer from '@/components/footer/Footer'
+import { AuthProvider } from '@/components/common/AuthProvider'
+import IntlLayout from '@/components/common/IntlLayout'
 
 export const metadata: Metadata = {
   title: {
@@ -19,9 +23,14 @@ interface RootLayoutProps {
 }
 
 async function RootLayout({ children, params: { locale } }: RootLayoutProps) {
+  const currentUser = await getCurrentUser()
   return (
     <IntlLayout params={{ locale }}>
-      <AuthLayout>{children}</AuthLayout>
+      <AuthProvider currentUser={currentUser}>
+        <Header currentUser={currentUser} />
+        {children}
+        <Footer />
+      </AuthProvider>
     </IntlLayout>
   )
 }
