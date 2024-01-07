@@ -33,6 +33,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callback')
   const handleSignIn = async () => {
+    //todo handle callbackUrl redirect
     await signIn('credentials', {
       email: user.email,
       password: user.password,
