@@ -2,6 +2,8 @@ import { Link } from '@/navigation'
 import { useTranslations } from 'next-intl'
 import React from 'react'
 
+export const dynamic = 'force-dynamic'
+
 export default function NotFound() {
   const t = useTranslations('Misc')
 
