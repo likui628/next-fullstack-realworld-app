@@ -5,6 +5,8 @@ import Header from '@/components/header/Header'
 import Footer from '@/components/footer/Footer'
 import { AuthProvider } from '@/components/common/AuthProvider'
 
+import '@/app/global.css'
+
 interface RootLayoutProps {
   children: React.ReactNode
 }

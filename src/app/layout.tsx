@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import React from 'react'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 
-import '@/app/global.css'
+import '@/app/style.css'
 
 export const metadata: Metadata = {
   title: {

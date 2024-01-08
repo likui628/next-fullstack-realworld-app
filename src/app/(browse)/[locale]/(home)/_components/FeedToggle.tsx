@@ -11,7 +11,7 @@ interface FeedToggleProps {
   tag?: string
 }
 
-const FeedToggle = async ({ feed, tag }: FeedToggleProps) => {
+const FeedToggle = ({ feed, tag }: FeedToggleProps) => {
   const t = useTranslations('Home')
   const { currentUser } = useAuth()
 
