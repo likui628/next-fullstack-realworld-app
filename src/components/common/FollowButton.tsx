@@ -7,6 +7,7 @@ import { useFollow } from '@/components/common/FollowProvider'
 import { useState } from 'react'
 import { useAuth } from '@/components/common/AuthProvider'
 import { usePathname, useRouter } from '@/navigation'
+import { useTranslations } from 'next-intl'
 
 interface FollowButtonProps {
   author: string
@@ -43,6 +44,7 @@ const FollowButton = ({ author, className }: FollowButtonProps) => {
     }
   }
 
+  const t = useTranslations('Profile')
   return (
     <button
       onClick={handleFavorites}
@@ -54,7 +56,7 @@ const FollowButton = ({ author, className }: FollowButtonProps) => {
       )}
     >
       <i className="ion-plus-round"></i>
-      &nbsp; {following ? 'Unfollow' : 'Follow'}&nbsp;
+      &nbsp; {following ? t('unfollow') : t('follow')}&nbsp;
       {author}
     </button>
   )

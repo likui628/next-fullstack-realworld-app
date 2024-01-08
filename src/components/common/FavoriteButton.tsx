@@ -7,13 +7,14 @@ import clsx from 'clsx'
 import { useArticle } from '@/components/article/ArticleProvider'
 import { useAuth } from '@/components/common/AuthProvider'
 import { usePathname, useRouter } from '@/navigation'
+import { useTranslations } from 'next-intl'
 
 interface FavoriteButtonProps {
   className?: string
-  text?: string
+  showText?: boolean
 }
 
-const FavoriteButton = ({ className, text }: FavoriteButtonProps) => {
+const FavoriteButton = ({ className, showText }: FavoriteButtonProps) => {
   const { article, setArticle } = useArticle()
   const { favorited, favoritesCount, slug } = { ...article }
   const [loading, setLoading] = useState(false)
@@ -44,6 +45,8 @@ const FavoriteButton = ({ className, text }: FavoriteButtonProps) => {
     }
   }
 
+  const t = useTranslations('Article')
+
   return (
     <button
       onClick={handleFavorites}
@@ -54,9 +57,10 @@ const FavoriteButton = ({ className, text }: FavoriteButtonProps) => {
       )}
     >
       <i className="ion-heart"></i>
-      {text ? (
+      {showText ? (
         <>
-          &nbsp; {text} <span className="counter">({favoritesCount})</span>
+          &nbsp; {favorited ? t('unfavorite') : t('favorite')}{' '}
+          <span className="counter">({favoritesCount})</span>
         </>
       ) : (
         <>&nbsp; {favoritesCount}</>

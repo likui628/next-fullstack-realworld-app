@@ -1,5 +1,63 @@
 {
+  "Header": {
+    "home": "Home",
+    "new-post": "New Post",
+    "settings": "Settings",
+    "sign-up": "Sign up",
+    "sign-in": "Sign in"
+  },
   "Home": {
-    "title": "Home"
+    "description": "A place to share your knowledge.",
+    "popular-tags": "Popular Tags",
+    "global-feed": "Global Feed",
+    "your-feed": "Your Feed"
+  },
+  "Auth": {
+    "sign-in": "Sign in",
+    "sign-up": "Sign up",
+    "need-account": "Need an account?",
+    "have-account": "Have an account?",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password"
+  },
+  "Editor": {
+    "title": "Article Title",
+    "description": "What's this article about?",
+    "body": "Write your article (in markdown)",
+    "tags": "Enter tags",
+    "publish": "Publish Article"
+  },
+  "Settings": {
+    "your-settings": "Your Settings",
+    "sign-out": "Or click here to logout.",
+    "image": "URL of profile picture",
+    "username": "Your Name",
+    "bio": "Short bio about you",
+    "email": "Email",
+    "password": "Password",
+    "update-settings": "Update Settings"
+  },
+  "Profile": {
+    "edit-profile": "Edit Profile Settings",
+    "my": "My Articles",
+    "favorite": "Favorited Articles",
+    "follow": "Follow",
+    "unfollow": "Unfollow"
+  },
+  "Article": {
+    "favorite": "Favorite Article",
+    "unfavorite": "Unfavorite Article",
+    "write-comment": "Write a comment...",
+    "post-comment": "Post Comment",
+    "comment-later": "to add comments on this article."
+  },
+  "Footer": {
+    "about": "An interactive learning project from ",
+    "licence": "Code & design licensed under MIT."
+  },
+  "Misc": {
+    "or": "or",
+    "no-articles": "No articles are here... yet."
   }
 }

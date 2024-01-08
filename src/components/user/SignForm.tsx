@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { signIn } from 'next-auth/react'
 import { fetchWrapper } from '@/utils/fetch'
 import { useSearchParams } from 'next/navigation'
+import { useTranslations } from 'next-intl'
 
 interface SignFormProps {
   isRegister?: boolean
@@ -33,7 +34,6 @@ const SignForm = ({ isRegister }: SignFormProps) => {
   const searchParams = useSearchParams()
   const callbackUrl = searchParams.get('callback')
   const handleSignIn = async () => {
-    //todo handle callbackUrl redirect
     await signIn('credentials', {
       email: user.email,
       password: user.password,
@@ -58,6 +58,8 @@ const SignForm = ({ isRegister }: SignFormProps) => {
       await handleSignIn()
     }
   }
+
+  const t = useTranslations('Auth')
   return (
     <>
       <ListErrors errors={errors} />
@@ -68,7 +70,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
               className="form-control form-control-lg"
               type="text"
               name="username"
-              placeholder="Username"
+              placeholder={t('username')}
               data-testid="input-username"
               value={user.username}
               onChange={(e) => onFieldChange({ username: e.target.value })}
@@ -81,7 +83,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
             className="form-control form-control-lg"
             type="text"
             name="email"
-            placeholder="Email"
+            placeholder={t('email')}
             data-testid="input-email"
             value={user.email}
             onChange={(e) => onFieldChange({ email: e.target.value })}
@@ -93,7 +95,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
             className="form-control form-control-lg"
             type="password"
             name="password"
-            placeholder="Password"
+            placeholder={t('password')}
             data-testid="input-password"
             value={user.password}
             onChange={(e) => onFieldChange({ password: e.target.value })}
@@ -105,7 +107,7 @@ const SignForm = ({ isRegister }: SignFormProps) => {
           data-testid="btn-submit"
           disabled={loading}
         >
-          {isRegister ? 'Sign up' : 'Sign in'}
+          {isRegister ? t('sign-up') : t('sign-in')}
         </button>
       </form>
     </>

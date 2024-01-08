@@ -8,6 +8,7 @@ import FollowButton from '@/components/common/FollowButton'
 import { useRouter, Link } from '@/navigation'
 import { fetchWrapper } from '@/utils/fetch'
 import { useArticle } from '@/components/article/ArticleProvider'
+import { useTranslations } from 'next-intl'
 
 const ArticleMeta = () => {
   const { article } = useArticle()
@@ -28,6 +29,8 @@ const ArticleMeta = () => {
     await fetchWrapper(`/articles/${article.slug}`, 'DELETE')
     router.push('/')
   }
+
+  const t = useTranslations('Article')
 
   return (
     <div className="article-meta">
@@ -66,7 +69,7 @@ const ArticleMeta = () => {
       ) : (
         <span>
           <FollowButton author={article.author.username} className={'mr-1'} />
-          <FavoriteButton text="Favorite Article" className="btn btn-sm" />
+          <FavoriteButton showText={true} className="btn btn-sm" />
         </span>
       )}
     </div>

@@ -1,5 +1,63 @@
 {
+  "Header": {
+    "home": "首页",
+    "new-post": "新文章",
+    "settings": "设置",
+    "sign-up": "注册",
+    "sign-in": "登录"
+  },
   "Home": {
-    "title": "首页"
+    "description": "一个分享知识的地方",
+    "popular-tags": "热门标签",
+    "global-feed": "全局动态",
+    "your-feed": "个人动态"
+  },
+  "Auth": {
+    "sign-in": "登录",
+    "sign-up": "注册",
+    "need-account": "需要账号？",
+    "have-account": "已有账号?",
+    "username": "用户名",
+    "email": "邮箱",
+    "password": "密码"
+  },
+  "Editor": {
+    "title": "文章标题",
+    "description": "简要描述文章内容",
+    "body": "文章内容，markdown格式",
+    "tags": "标签，回车确认",
+    "publish": "发布文章"
+  },
+  "Settings": {
+    "your-settings": "个人设置",
+    "sign-out": "点击这里退出登录",
+    "image": "头像URL地址",
+    "username": "你的名字",
+    "bio": "你的个人简介",
+    "email": "邮箱",
+    "password": "密码",
+    "update-settings": "更新设置"
+  },
+  "Profile": {
+    "edit-profile": "修改个人设置",
+    "my": "我的文章",
+    "favorite": "喜欢的文章",
+    "follow": "关注",
+    "unfollow": "取消关注"
+  },
+  "Article": {
+    "favorite": "收藏文章",
+    "unfavorite": "取消收藏",
+    "write-comment": "写下你的评论...",
+    "post-comment": "发表评论",
+    "comment-later": "后再来评论"
+  },
+  "Footer": {
+    "about": "交互式学习项目, 源自",
+    "licence": "代码和设计基于MIT开源协议"
+  },
+  "Misc": {
+    "or": "或",
+    "no-articles": "这里还没有文章…"
   }
 }

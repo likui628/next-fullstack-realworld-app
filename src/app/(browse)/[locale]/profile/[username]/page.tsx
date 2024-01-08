@@ -9,6 +9,7 @@ import FollowButton from '@/components/common/FollowButton'
 import { Metadata } from 'next'
 import clsx from 'clsx'
 import { FollowProvider } from '@/components/common/FollowProvider'
+import { getTranslations } from 'next-intl/server'
 
 interface ProfilePageProps {
   params: { username: string }
@@ -44,6 +45,8 @@ const ProfilePage = async ({ params, searchParams }: ProfilePageProps) => {
   const page = Number(searchParams.page) || 1
   const currentUser = await getCurrentUser()
 
+  const t = await getTranslations('Profile')
+
   return (
     <FollowProvider following={profile.following}>
       <div className="profile-page">
@@ -66,7 +69,7 @@ const ProfilePage = async ({ params, searchParams }: ProfilePageProps) => {
                     className="btn btn-sm btn-outline-secondary action-btn"
                   >
                     <i className="ion-gear-a"></i>
-                    &nbsp;Edit Profile Settings
+                    &nbsp;{t('edit-profile')}
                   </Link>
                 ) : (
                   <FollowButton
@@ -92,7 +95,7 @@ const ProfilePage = async ({ params, searchParams }: ProfilePageProps) => {
                         tab !== 'favorited' && 'active',
                       )}
                     >
-                      My Articles
+                      {t('my')}
                     </QueryLink>
                   </li>
                   <li className="nav-item">
@@ -103,7 +106,7 @@ const ProfilePage = async ({ params, searchParams }: ProfilePageProps) => {
                         tab === 'favorited' && 'active',
                       )}
                     >
-                      Favorited Articles
+                      {t('favorite')}
                     </QueryLink>
                   </li>
                 </ul>

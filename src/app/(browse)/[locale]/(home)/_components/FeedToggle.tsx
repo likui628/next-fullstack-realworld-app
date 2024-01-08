@@ -4,6 +4,7 @@ import QueryLink from '@/components/common/QueryLink'
 import clsx from 'clsx'
 import { Link } from '@/navigation'
 import { CurrentUser } from '@/types/response'
+import { useTranslations } from 'next-intl'
 
 interface FeedToggleProps {
   feed?: string
@@ -12,6 +13,7 @@ interface FeedToggleProps {
 }
 
 const FeedToggle = ({ feed, tag, user }: FeedToggleProps) => {
+  const t = useTranslations('Home')
   return (
     <div className="feed-toggle">
       <ul className="nav nav-pills outline-active">
@@ -21,7 +23,7 @@ const FeedToggle = ({ feed, tag, user }: FeedToggleProps) => {
               query={{ feed: 'feed' }}
               className={clsx('nav-link', feed === 'feed' && 'active')}
             >
-              Your Feed
+              {t('your-feed')}
             </QueryLink>
           )}
         </li>
@@ -30,7 +32,7 @@ const FeedToggle = ({ feed, tag, user }: FeedToggleProps) => {
             query={{ feed: 'global' }}
             className={clsx('nav-link', feed !== 'feed' && !tag && 'active')}
           >
-            Global Feed
+            {t('global-feed')}
           </QueryLink>
         </li>
         <li className="nav-item">

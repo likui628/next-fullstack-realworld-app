@@ -5,6 +5,7 @@ import { ArticleItem } from '@/types/response'
 import Pagination from '@/components/article/Pagination'
 import FeedToggle from './_components/FeedToggle'
 import getCurrentUser from '@/actions/getCurrentUser'
+import { getTranslations } from 'next-intl/server'
 
 interface HomeProps {
   searchParams: {
@@ -22,13 +23,14 @@ export default async function Home({ searchParams }: HomeProps) {
   const user = await getCurrentUser()
 
   const data = await getArticles({ page, tag, feed })
+  const t = await getTranslations()
   return (
     <>
       <div className="home-page">
         <div className="banner">
           <div className="container">
             <h1 className="logo-font">conduit</h1>
-            <p>A place to share your knowledge.</p>
+            <p>{t('Home.description')}</p>
           </div>
         </div>
 
@@ -37,9 +39,7 @@ export default async function Home({ searchParams }: HomeProps) {
             <div className="col-md-9">
               <FeedToggle user={user} tag={tag} feed={feed} />
               {data.articles.length === 0 ? (
-                <div className="article-preview">
-                  No articles are here... yet.
-                </div>
+                <div className="article-preview">{t('Misc.no-articles')}</div>
               ) : (
                 <>
                   {data.articles.map((article: ArticleItem) => (

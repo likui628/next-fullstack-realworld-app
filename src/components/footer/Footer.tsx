@@ -1,6 +1,9 @@
 import { Link } from '@/navigation'
+import { useTranslations } from 'next-intl'
 
-const Footer = () => {
+const Footer = async () => {
+  const t = useTranslations('Footer')
+
   return (
     <footer>
       <div className="container">
@@ -8,9 +11,8 @@ const Footer = () => {
           conduit
         </Link>
         <span className="attribution">
-          An interactive learning project from{' '}
-          <a href="https://thinkster.io">Thinkster</a>. Code &amp; design
-          licensed under MIT.
+          {t('about')}
+          <a href="https://thinkster.io">Thinkster</a>.{t('licence')}
         </span>
       </div>
     </footer>

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { ArticleItem } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useRouter } from '@/navigation'
+import { useTranslations } from 'next-intl'
 
 interface EditorForm {
   slug?: string
@@ -66,6 +67,7 @@ const EditorForm = (props: EditorFormProps) => {
     }
   }
 
+  const t = useTranslations('Editor')
   return (
     <div className="col-md-10 offset-md-1 col-xs-12">
       <ul className="error-messages">
@@ -79,7 +81,7 @@ const EditorForm = (props: EditorFormProps) => {
             <input
               type="text"
               className="form-control form-control-lg"
-              placeholder="Article Title"
+              placeholder={t('title')}
               value={article.title}
               disabled={loading}
               onInput={(e) => onChange({ title: e.currentTarget.value })}
@@ -89,7 +91,7 @@ const EditorForm = (props: EditorFormProps) => {
             <input
               type="text"
               className="form-control"
-              placeholder="What's this article about?"
+              placeholder={t('description')}
               value={article.description}
               disabled={loading}
               onInput={(e) => onChange({ description: e.currentTarget.value })}
@@ -99,17 +101,17 @@ const EditorForm = (props: EditorFormProps) => {
             <textarea
               className="form-control"
               rows={8}
-              placeholder="Write your article (in markdown)"
+              placeholder={t('body')}
               value={article.body}
               disabled={loading}
               onInput={(e) => onChange({ body: e.currentTarget.value })}
-            ></textarea>
+            />
           </fieldset>
           <fieldset className="form-group">
             <input
               type="text"
               className="form-control"
-              placeholder="Enter tags"
+              placeholder={t('tags')}
               value={tag}
               disabled={loading}
               onInput={(e) => setTag(e.currentTarget.value)}
@@ -133,7 +135,7 @@ const EditorForm = (props: EditorFormProps) => {
             type="submit"
             disabled={loading}
           >
-            Publish Article
+            {t('publish')}
           </button>
         </fieldset>
       </form>

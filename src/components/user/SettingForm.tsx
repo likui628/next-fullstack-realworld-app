@@ -5,6 +5,7 @@ import React, { useState } from 'react'
 import { fetchWrapper } from '@/utils/fetch'
 import { useRouter } from '@/navigation'
 import ListErrors from '@/components/common/ListErrors'
+import { useTranslations } from 'next-intl'
 
 interface SettingFormProps {
   user: CurrentUser
@@ -46,6 +47,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
     }
   }
 
+  const t = useTranslations('Settings')
   return (
     <>
       <ListErrors errors={errors} />
@@ -55,7 +57,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
             <input
               className="form-control"
               type="text"
-              placeholder="URL of profile picture"
+              placeholder={t('image')}
               value={userInfo.image}
               onChange={(e) => handleChange({ image: e.target.value })}
               disabled={loading}
@@ -65,7 +67,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
             <input
               className="form-control form-control-lg"
               type="text"
-              placeholder="Your Name"
+              placeholder={t('username')}
               value={userInfo.username}
               onChange={(e) => handleChange({ username: e.target.value })}
               disabled={loading}
@@ -75,7 +77,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
             <textarea
               className="form-control form-control-lg"
               rows={8}
-              placeholder="Short bio about you"
+              placeholder={t('bio')}
               value={userInfo.bio || ''}
               onChange={(e) => handleChange({ bio: e.target.value })}
               disabled={loading}
@@ -85,7 +87,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
             <input
               className="form-control form-control-lg"
               type="text"
-              placeholder="Email"
+              placeholder={t('email')}
               value={userInfo.email}
               onChange={(e) => handleChange({ email: e.target.value })}
               disabled={loading}
@@ -95,7 +97,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
             <input
               className="form-control form-control-lg"
               type="password"
-              placeholder="Password"
+              placeholder={t('password')}
               value={userInfo.password}
               onChange={(e) => handleChange({ password: e.target.value })}
               disabled={loading}
@@ -106,7 +108,7 @@ const SettingForm = ({ user }: SettingFormProps) => {
             className="btn btn-lg btn-primary pull-xs-right"
             disabled={loading}
           >
-            Update Settings
+            {t('update-settings')}
           </button>
         </fieldset>
       </form>

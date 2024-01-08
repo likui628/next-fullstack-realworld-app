@@ -7,6 +7,7 @@ import { CommentItem, CommentsResp } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useAuth } from '@/components/common/AuthProvider'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface ArticleCommentsProps {
   slug: string
@@ -45,6 +46,8 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
     }
   }
 
+  const t = useTranslations()
+
   return (
     <div className="row">
       <div className="col-xs-12 col-md-8 offset-md-2">
@@ -54,7 +57,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
               <div className="card-block">
                 <textarea
                   className="form-control"
-                  placeholder="Write a comment..."
+                  placeholder={t('Article.write-comment')}
                   value={comment}
                   onChange={(e) => setComment(e.target.value)}
                   rows={3}
@@ -69,7 +72,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                   height={26}
                 />
                 <button className="btn btn-sm btn-primary" type="submit">
-                  Post Comment
+                  {t('Article.post-comment')}
                 </button>
               </div>
             </form>
@@ -115,9 +118,9 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
           </>
         ) : (
           <p>
-            <Link href="/login">Sign in</Link> or{' '}
-            <Link href="/register">sign up</Link> to add comments on this
-            article.
+            <Link href="/login">{t('Auth.sign-in')}</Link> {t('Misc.or')}{' '}
+            <Link href="/register">{t('Auth.sign-up')}</Link>{' '}
+            {t('Article.comment-later')}
           </p>
         )}
       </div>

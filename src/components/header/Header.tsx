@@ -1,12 +1,15 @@
 import { Link } from '@/navigation'
 import { CurrentUser } from '@/types/response'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 interface HeaderProps {
   currentUser?: CurrentUser | null
 }
 
 const Header = ({ currentUser }: HeaderProps) => {
+  const t = useTranslations('Header')
+
   return (
     <nav className="navbar navbar-light">
       <div className="container">
@@ -16,19 +19,19 @@ const Header = ({ currentUser }: HeaderProps) => {
         <ul className="nav navbar-nav pull-xs-right">
           <li className="nav-item">
             <Link href={'/'} className="nav-link">
-              Home
+              {t('home')}
             </Link>
           </li>
           {currentUser ? (
             <>
               <li className="nav-item">
                 <Link href={'/editor'} className="nav-link">
-                  <i className="ion-compose"></i>&nbsp;New Post
+                  <i className="ion-compose"></i>&nbsp;{t('new-post')}
                 </Link>
               </li>
               <li className="nav-item">
                 <Link href={'/settings'} className="nav-link">
-                  <i className="ion-gear-a"></i>&nbsp;Settings
+                  <i className="ion-gear-a"></i>&nbsp;{t('settings')}
                 </Link>
               </li>
 
@@ -52,12 +55,12 @@ const Header = ({ currentUser }: HeaderProps) => {
             <>
               <li className="nav-item">
                 <Link href={'/login'} className="nav-link">
-                  Sign in
+                  {t('sign-in')}
                 </Link>
               </li>
               <li className="nav-item">
                 <Link href={'/register'} className="nav-link">
-                  Sign up
+                  {t('sign-up')}
                 </Link>
               </li>
             </>
