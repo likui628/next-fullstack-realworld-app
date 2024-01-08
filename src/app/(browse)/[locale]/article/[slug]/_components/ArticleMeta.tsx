@@ -14,6 +14,7 @@ const ArticleMeta = () => {
   const { article } = useArticle()
   const { currentUser } = useAuth()
   const router = useRouter()
+  const t = useTranslations('Article')
 
   if (!article) {
     return null
@@ -29,8 +30,6 @@ const ArticleMeta = () => {
     await fetchWrapper(`/articles/${article.slug}`, 'DELETE')
     router.push('/')
   }
-
-  const t = useTranslations('Article')
 
   return (
     <div className="article-meta">
