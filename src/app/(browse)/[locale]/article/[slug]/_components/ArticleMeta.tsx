@@ -2,7 +2,7 @@
 
 import { useAuth } from '@/components/common/AuthProvider'
 import Image from 'next/image'
-import { formatTime } from '@/utils/format'
+import { useFormatDateTime } from '@/utils/dateTime'
 import FavoriteButton from '@/components/common/FavoriteButton'
 import FollowButton from '@/components/common/FollowButton'
 import { useRouter, Link } from '@/navigation'
@@ -15,6 +15,7 @@ const ArticleMeta = () => {
   const { currentUser } = useAuth()
   const router = useRouter()
   const t = useTranslations('Article')
+  const formatDateTime = useFormatDateTime()
 
   if (!article) {
     return null
@@ -46,7 +47,7 @@ const ArticleMeta = () => {
         <Link href={`/profile/@${article.author.username}`} className="author">
           {article.author.username}
         </Link>
-        <span className="date">{formatTime(article.updatedAt)}</span>
+        <span className="date">{formatDateTime(article.updatedAt)}</span>
       </div>
       {isAuthor ? (
         <span>

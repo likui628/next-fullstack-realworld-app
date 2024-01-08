@@ -1,7 +1,7 @@
 'use client'
 
 import { Link } from '@/navigation'
-import { formatTime } from '@/utils/format'
+import { useFormatDateTime } from '@/utils/dateTime'
 import { ArticleItem } from '@/types/response'
 import FavoritesButton from '@/components/common/FavoriteButton'
 import Image from 'next/image'
@@ -12,6 +12,7 @@ interface ArticlePreviewProps {
 }
 
 const ArticlePreview = ({ article }: ArticlePreviewProps) => {
+  const formatDateTime = useFormatDateTime()
   return (
     <ArticleProvider article={article}>
       <div className="article-preview">
@@ -31,7 +32,7 @@ const ArticlePreview = ({ article }: ArticlePreviewProps) => {
             >
               {article.author.username}
             </Link>
-            <span className="date">{formatTime(article.updatedAt)}</span>
+            <span className="date">{formatDateTime(article.updatedAt)}</span>
           </div>
           <FavoritesButton className="btn btn-sm pull-xs-right" />
         </div>

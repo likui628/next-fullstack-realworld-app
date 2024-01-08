@@ -1,13 +1,13 @@
 'use client'
 
 import { Link } from '@/navigation'
-import { formatTime } from '@/utils/format'
 import React, { useEffect, useState } from 'react'
 import { CommentItem, CommentsResp } from '@/types/response'
 import { fetchWrapper } from '@/utils/fetch'
 import { useAuth } from '@/components/common/AuthProvider'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import { useFormatDateTime } from '@/utils/dateTime'
 
 interface ArticleCommentsProps {
   slug: string
@@ -47,6 +47,8 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
   }
 
   const t = useTranslations()
+
+  const formatDateTime = useFormatDateTime()
 
   return (
     <div className="row">
@@ -102,7 +104,7 @@ const ArticleComments = ({ slug }: ArticleCommentsProps) => {
                     {comment.author.username}
                   </Link>
                   <span className="date-posted">
-                    {formatTime(comment.updatedAt)}
+                    {formatDateTime(comment.updatedAt)}
                   </span>
                   {currentUser.id === comment.author.id && (
                     <span
