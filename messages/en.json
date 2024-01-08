@@ -58,6 +58,9 @@
   },
   "Misc": {
     "or": "or",
-    "no-articles": "No articles are here... yet."
+    "no-articles": "No articles are here... yet.",
+    "404": "This page could not be found.",
+    "404-desc": "Sorry, but it looks like that page doesn't exist.",
+    "return-home": "Return Home"
   }
 }
