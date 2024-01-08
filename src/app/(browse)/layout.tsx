@@ -2,12 +2,7 @@ import { Metadata } from 'next'
 import React from 'react'
 
 import '@/app/global.css'
-
-import getCurrentUser from '@/actions/getCurrentUser'
-import Header from '@/components/header/Header'
-import Footer from '@/components/footer/Footer'
-import { AuthProvider } from '@/components/common/AuthProvider'
-import IntlLayout from '@/components/common/IntlLayout'
+import { NextIntlClientProvider, useMessages } from 'next-intl'
 
 export const metadata: Metadata = {
   title: {
@@ -22,17 +17,19 @@ interface RootLayoutProps {
   params: { locale: string }
 }
 
-async function RootLayout({ children, params: { locale } }: RootLayoutProps) {
-  const currentUser = await getCurrentUser()
+async function IntlLayout({ children, params: { locale } }: RootLayoutProps) {
+  const messages = useMessages()
   return (
-    <IntlLayout params={{ locale }}>
-      <AuthProvider currentUser={currentUser}>
-        <Header currentUser={currentUser} />
-        {children}
-        <Footer />
-      </AuthProvider>
-    </IntlLayout>
+    <>
+      <html lang={locale}>
+        <body suppressHydrationWarning={true}>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            {children}
+          </NextIntlClientProvider>
+        </body>
+      </html>
+    </>
   )
 }
 
-export default RootLayout
+export default IntlLayout
