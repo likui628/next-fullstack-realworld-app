@@ -3,22 +3,23 @@
 import QueryLink from '@/components/common/QueryLink'
 import clsx from 'clsx'
 import { Link } from '@/navigation'
-import { CurrentUser } from '@/types/response'
 import { useTranslations } from 'next-intl'
+import { useAuth } from '@/components/common/AuthProvider'
 
 interface FeedToggleProps {
   feed?: string
   tag?: string
-  user: CurrentUser | null
 }
 
-const FeedToggle = ({ feed, tag, user }: FeedToggleProps) => {
+const FeedToggle = async ({ feed, tag }: FeedToggleProps) => {
   const t = useTranslations('Home')
+  const { currentUser } = useAuth()
+
   return (
     <div className="feed-toggle">
       <ul className="nav nav-pills outline-active">
         <li className="nav-item">
-          {user && (
+          {currentUser && (
             <QueryLink
               query={{ feed: 'feed' }}
               className={clsx('nav-link', feed === 'feed' && 'active')}

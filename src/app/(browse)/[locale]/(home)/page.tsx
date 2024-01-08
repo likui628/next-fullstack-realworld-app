@@ -1,10 +1,6 @@
-import PopularTags from '@/components/popular-tags/PopularTags'
-import ArticlePreview from '@/components/article/ArticlePreview'
-import getArticles from '@/actions/getArticles'
-import { ArticleItem } from '@/types/response'
-import Pagination from '@/components/article/Pagination'
 import FeedToggle from './_components/FeedToggle'
-import getCurrentUser from '@/actions/getCurrentUser'
+import ArticleList from './_components/ArticleList'
+import PopularTags from '@/components/popular-tags/PopularTags'
 import { getTranslations } from 'next-intl/server'
 
 interface HomeProps {
@@ -20,34 +16,22 @@ export default async function Home({ searchParams }: HomeProps) {
   const tag = searchParams.tag
   const feed = searchParams.feed
 
-  const user = await getCurrentUser()
-
-  const data = await getArticles({ page, tag, feed })
-  const t = await getTranslations()
+  const t = await getTranslations('Home')
   return (
     <>
       <div className="home-page">
         <div className="banner">
           <div className="container">
             <h1 className="logo-font">conduit</h1>
-            <p>{t('Home.description')}</p>
+            <p>{t('description')}</p>
           </div>
         </div>
 
         <div className="container page">
           <div className="row">
             <div className="col-md-9">
-              <FeedToggle user={user} tag={tag} feed={feed} />
-              {data.articles.length === 0 ? (
-                <div className="article-preview">{t('Misc.no-articles')}</div>
-              ) : (
-                <>
-                  {data.articles.map((article: ArticleItem) => (
-                    <ArticlePreview article={article} key={article.slug} />
-                  ))}
-                  <Pagination count={data.articlesCount} page={page} />
-                </>
-              )}
+              <FeedToggle tag={tag} feed={feed} />
+              <ArticleList page={page} tag={tag} feed={feed} />
             </div>
             <div className="col-md-3">
               <PopularTags />
