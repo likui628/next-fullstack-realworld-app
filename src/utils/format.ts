@@ -1,5 +1,9 @@
+import { useFormatter } from 'next-intl'
+
 export const formatTime = (time: string) => {
-  return new Date(time).toLocaleDateString('en-US', {
+  const format = useFormatter()
+
+  return format.dateTime(new Date(time), {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
