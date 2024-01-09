@@ -1,10 +1,8 @@
-import { useTranslations } from 'next-intl'
 import React from 'react'
+import { useTranslations } from 'next-intl'
 import BackHome from '@/components/common/BackHome'
 
-export const dynamic = 'force-dynamic'
-
-export default function NotFound() {
+const NotFound = () => {
   const t = useTranslations('Misc')
 
   return (
@@ -18,3 +16,5 @@ export default function NotFound() {
     </div>
   )
 }
+
+export default NotFound
