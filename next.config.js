@@ -2,7 +2,6 @@
 const withNextIntl = require('next-intl/plugin')()
 
 const config = withNextIntl({
-  output: 'standalone',
   images: {
     remotePatterns: [
       {
