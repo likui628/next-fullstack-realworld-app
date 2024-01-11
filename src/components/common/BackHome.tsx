@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { useRouter } from '@/navigation'
 
 interface BackHomeProps {
   className?: string
@@ -8,10 +9,9 @@ interface BackHomeProps {
 }
 
 const BackHome = ({ className, children }: BackHomeProps) => {
+  const router = useRouter()
   const handleBackHome = () => {
-    // fix when use <Link href="/">, it will throw error:
-    // Expected a suspended thenable. This is a bug in React. Please file an issue.
-    window.location.href = '/'
+    router.push('/')
   }
   return (
     <button className={className} onClick={handleBackHome}>
