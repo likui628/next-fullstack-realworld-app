@@ -12,7 +12,10 @@ const homePageRegex = RegExp(`^(/(${locales.join('|')}))?/?$`, 'i')
 
 export const withFeed: NextMiddlewareFactory = (middleware: NextMiddleware) => {
   return async (request: NextRequest, _next: NextFetchEvent) => {
-    if (homePageRegex.test(request.nextUrl.pathname)) {
+    const match = request.nextUrl.pathname.match(homePageRegex)
+    if (match) {
+      const locale = match[2] || ''
+
       const searchParams = request.nextUrl.searchParams
       const tag = searchParams.get('tag')
       const feed = searchParams.get('feed')
@@ -20,11 +23,13 @@ export const withFeed: NextMiddlewareFactory = (middleware: NextMiddleware) => {
       const token = await getToken({ req: request })
       if (token) {
         if (!tag && !feed) {
-          return NextResponse.redirect(new URL('/?feed=feed', request.url))
+          return NextResponse.redirect(
+            new URL(`/${locale}?feed=feed`, request.url),
+          )
         }
       } else {
         if (feed === 'feed') {
-          return NextResponse.redirect(new URL('/login', request.url))
+          return NextResponse.redirect(new URL(`/${locale}/login`, request.url))
         }
       }
     }
