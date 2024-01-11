@@ -16,7 +16,7 @@ const LocaleSelector = () => {
     target: { value },
   }: React.ChangeEvent<HTMLSelectElement>) => {
     startTransition(() => {
-      router.push(pathname, { locale: value })
+      router.replace(pathname, { locale: value })
     })
   }
 

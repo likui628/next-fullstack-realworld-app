@@ -8,7 +8,7 @@ import { NextMiddlewareFactory } from '@/middlewares/chain'
 import { getToken } from 'next-auth/jwt'
 import { locales } from '@/navigation'
 
-const homePageRegex = RegExp(`^(/(${locales.join('|')}))?/$`, 'i')
+const homePageRegex = RegExp(`^(/(${locales.join('|')}))?/?$`, 'i')
 
 export const withFeed: NextMiddlewareFactory = (middleware: NextMiddleware) => {
   return async (request: NextRequest, _next: NextFetchEvent) => {
