@@ -1,14 +1,14 @@
+'use client'
+
 import { Link } from '@/navigation'
-import { CurrentUser } from '@/types/response'
 import Image from 'next/image'
 import { useTranslations } from 'next-intl'
+import LocaleSelector from '@/components/common/LocaleSelector'
+import { useAuth } from '@/components/common/AuthProvider'
 
-interface HeaderProps {
-  currentUser?: CurrentUser | null
-}
-
-const Header = ({ currentUser }: HeaderProps) => {
+const Header = () => {
   const t = useTranslations('Header')
+  const { currentUser } = useAuth()
 
   return (
     <nav className="navbar navbar-light">
@@ -65,6 +65,9 @@ const Header = ({ currentUser }: HeaderProps) => {
               </li>
             </>
           )}
+          <li className="nav-item">
+            <LocaleSelector />
+          </li>
         </ul>
       </div>
     </nav>
