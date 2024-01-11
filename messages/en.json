@@ -62,5 +62,9 @@
     "404": "This page could not be found.",
     "404-desc": "Sorry, but it looks like that page doesn't exist.",
     "return-home": "Return Home"
+  },
+  "LocaleSelector": {
+    "en": "English",
+    "zh": "中文"
   }
 }

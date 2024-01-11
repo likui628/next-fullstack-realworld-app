@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useTransition } from 'react'
-import { useLocale } from 'next-intl'
+import { useLocale, useTranslations } from 'next-intl'
 import { locales, usePathname, useRouter } from '@/navigation'
 
 const LocaleSelector = () => {
@@ -9,6 +9,8 @@ const LocaleSelector = () => {
   const locale = useLocale()
   const [isPending, startTransition] = useTransition()
   const pathname = usePathname()
+
+  const t = useTranslations('LocaleSelector')
 
   const handleLocaleChange = ({
     target: { value },
@@ -33,7 +35,7 @@ const LocaleSelector = () => {
     >
       {locales.map((l) => (
         <option value={l} key={l}>
-          {l}
+          {t(l as any)}
         </option>
       ))}
     </select>
